@@ -25,3 +25,10 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+## INICIO DE LA APLICACION
+
+para crear una pagina colocar en la terminal: ng generate component pages/nombre-componente
+eso generara un componente con su css y html propio avisar si tienen dudas
+
+Yo creare el nav y footer de la aplicacion hoy dia (Martin Romero 06/10/2024)

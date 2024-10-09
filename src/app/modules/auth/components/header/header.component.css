@@ -1,0 +1,7 @@
+nav{
+    background-color: darkcyan;
+}
+
+nav > div > h5{
+    color: white;
+}
