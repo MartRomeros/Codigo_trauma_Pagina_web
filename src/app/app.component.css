@@ -1,0 +1,11 @@
+nav{
+    background: darkcyan;
+}
+
+.navbar-brand{
+    color: white;
+}
+
+.nav-link,.nav-link.active{
+    color: white;
+}
