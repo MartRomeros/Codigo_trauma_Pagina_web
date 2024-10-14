@@ -1,11 +1,23 @@
 <main class="container-fluid">
     <section class="row">
-        <form class="col">
+        <form class="col-md-6">
             <fieldset>
                 <h5>Inicio de Sesión</h5>
                 <h6>Completa los campos para ingresar con tu perfil</h6>
             </fieldset>
-
+            <div class="mb-3">
+                <label for="email" class="form-label">Correo electronico</label>
+                <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+                <div id="emailHelp" class="form-text">Ingresa tu correo electronico</div>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password">
+            </div>
+            <fieldset class="login-options">
+                <a href="">¿Olvidaste tu contraseña?</a>
+                <a href="/registro">Registrarme</a>
+            </fieldset>
             <button type="button" class="btn btn-info">Ingresar</button>
         </form>
     </section>
