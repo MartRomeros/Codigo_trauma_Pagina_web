@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
-  imports: [MatProgressBarModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
+
 })
 export class LoginComponent {
   cargando?:boolean
