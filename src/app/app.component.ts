@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AuthModule } from './pages/auth/auth.module';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -11,4 +12,10 @@ import { AuthModule } from './pages/auth/auth.module';
 })
 export class AppComponent {
   title = 'codigo-trauma-web';
+
+  constructor(private router:Router){}
+
+  panelControl(){
+    this.router.navigate(['panel-control'])
+  }
 }
