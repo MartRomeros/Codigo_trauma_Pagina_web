@@ -35,13 +35,27 @@ section:nth-child(2) > h1{
     text-align: center;
 }
 
+
+.card-body > i{
+    font-size: 3rem;
+    text-align: center;
+}
+
 /* tercer seccion */
 section:nth-child(3){
     background-color: rgb(250, 246, 246) ;
     padding: 2vh;
-    height: 30vh;
     display: flex;
-    align-items: center;
-    gap: 6vh;
+    justify-content: space-around;
 }
 
+
+section:nth-child(3) > figure,
+section:nth-child(3) > figure > img{
+    border-radius: 2vh;
+}
+
+.contact-options{
+    display: flex;
+    justify-content: space-between;
+}
