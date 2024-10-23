@@ -4,6 +4,7 @@ import { RegistroComponent } from './pages/auth/registro/registro.component';
 import { HomeComponent } from './pages/home/home/home.component';
 import { EmergenciaComponent } from './pages/emergencia/emergencia.component';
 import { PanelControlComponent } from './pages/panel-control/panel-control.component';
+import { ForgotPasswordComponent } from './pages/auth/forgot-password/forgot-password.component';
 
 export const routes: Routes = [
     {
@@ -18,6 +19,10 @@ export const routes: Routes = [
     {
         path:'registro',
         component: RegistroComponent
+    },
+    {
+        path:'forgot-password',
+        component: ForgotPasswordComponent
     },
     {
         path:'home',
