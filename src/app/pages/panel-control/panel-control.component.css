@@ -1,0 +1,19 @@
+.seccionForm {
+  max-width: 600px;
+  margin: 2.5rem auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.grupos {
+  margin-bottom: 15px;
+}
+
+.btn-primary {
+  background-color: darkcyan;
+  border-color: darkcyan;
+  margin-left: 33%; 
+  font-family: "Inter", sans-serif;
+}
+

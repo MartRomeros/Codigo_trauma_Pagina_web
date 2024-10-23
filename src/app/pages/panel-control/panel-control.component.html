@@ -1,30 +1,40 @@
 <main class="container-fluid">
-    <section class="row">
-        <form class="col-md-6">
-            <div>
-                <p>Descripción</p>
-                <input type="text" placeholder="Describa la emergencia">
+    <section class="seccionForm">
+        <h2>Registro de Emergencia de Urgencias</h2>
+        <form [formGroup]="emergenciaForm" (ngSubmit)="onSubmit()">
+            <div class="grupos">
+                <label for="descripcion">Descripción de la Emergencia:</label>
+                <textarea id="descripcion" formControlName="descripcion" class="form-control" rows="3"></textarea>
             </div>
-            <div>
-                <p>Victimas Involucradas</p>
-                <input type="number" placeholder="Numero de victimas">
+
+            <div class="grupos">
+                <label for="victimas">Víctimas Involucradas:</label>
+                <input type="number" id="victimas" formControlName="victimas" class="form-control" />
             </div>
-            <div>
-                <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Dropdown
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li><button class="dropdown-item" type="button">ola</button></li>
-                      <li><button class="dropdown-item" type="button">hola</button></li>
-                      <li><button class="dropdown-item" type="button">oli</button></li>
-                    </ul>
-                  </div>
+
+            <div class="grupos">
+                <label for="tipo">Tipo de Emergencia:</label>
+                <select id="tipo" formControlName="tipo" class="form-control" >
+                    <option value="escoja">Escoja Una Opcion (Haga click para ver las opciones)</option>
+                    <option value="urgente">Urgente</option>
+                    <option value="consulta">Consulta</option>
+                    <option value="chequeo">Chequeo Médico</option>
+                </select>
             </div>
-            <div>
-                <p>Descripción</p>
-                <input type="text" placeholder="Describa la emergencia">
+
+            <div class="grupos">
+                <label for="tipoArea">Área del Hospital:</label>
+                <select id="tipoArea" formControlName="tipoArea" class="form-control">
+                    <option id="textoPlomo" value="escoja">Escoja Una Opcion (Haga click para ver las opciones)</option>
+                    <option value="cirugía intensa">Cirugía Intensa</option>
+                    <option value="enfermería">Enfermería</option>
+                    <option value="urgencias">Urgencias</option>
+                    <option value="cuidados intensivos">Cuidados Intensivos</option>
+                    <option value="laboratorio">Laboratorio</option>
+                </select>
             </div>
+
+            <button type="submit" class="btn btn-primary">Registrar Emergencia</button>
         </form>
     </section>
 </main>
