@@ -1,1 +1,44 @@
-<p>registro works!</p>
+@if(cargando){
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+}
+
+<main class="container-fluid">
+    <section class="row">
+        <form class="col-md-6">
+            <fieldset>
+                <h5>Registro de usuario <i class="bi bi-person-fill-add"></i></h5>
+                <h6>Completa los campos para crear tu perfil de usuario</h6>
+            </fieldset>
+            <div class="mb-3">
+                <label for="rut" class="form-label">Rut de usuario</label>
+                <input type="text" class="form-control" id="rut">
+                <div id="emailHelp" class="form-text">Ingresa tu rut sin puntos ni guión</div>
+            </div>
+            <div class="mb-3">
+                <label for="name" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="name">
+                <div id="emailHelp" class="form-text">Ingresa tu nombre</div>
+            </div>
+            <div class="mb-3">
+                <label for="last-name" class="form-label">Apellido</label>
+                <input type="text" class="form-control" id="last-name">
+                <div id="emailHelp" class="form-text">Ingresa tus apellidos</div>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Correo electronico</label>
+                <input type="email" class="form-control" id="email">
+                <div id="emailHelp" class="form-text">Ingresa tu correo electronico</div>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password">
+                <div id="emailHelp" class="form-text">Ingresa tu contraseña</div>
+            </div>
+            <fieldset class="login-options">
+                <a href="/login">Ya tengo una cuenta</a>
+            </fieldset>
+
+            <button type="button" class="btn btn-info">Ingresar</button>
+        </form>
+    </section>
+</main>

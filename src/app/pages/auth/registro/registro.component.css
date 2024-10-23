@@ -1,0 +1,35 @@
+section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 97vh;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+}
+
+fieldset > h5,
+fieldset > h6{
+    text-align: center;
+}
+
+.login-options{
+    display: flex;
+    justify-content: space-between;
+}
+
+.login-options > a{
+    text-decoration: none;
+    color: black;
+}
+
+.form-control{
+    border: 1px cyan solid;
+}
+
+form > button{
+    color: white;
+}
