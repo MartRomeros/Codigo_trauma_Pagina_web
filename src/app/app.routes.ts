@@ -3,8 +3,9 @@ import { LoginComponent } from './pages/auth/login/login.component';
 import { RegistroComponent } from './pages/auth/registro/registro.component';
 import { HomeComponent } from './pages/home/home/home.component';
 import { EmergenciaComponent } from './pages/emergencia/emergencia.component';
-import { PanelControlComponent } from './pages/panel-control/panel-control.component';
 import { ForgotPasswordComponent } from './pages/auth/forgot-password/forgot-password.component';
+import { PanelControlComponent } from './pages/panel-control/panel-control/panel-control.component';
+import { EmergenciasUpdateComponent } from './pages/panel-control/emergencias-update/emergencias-update.component';
 
 export const routes: Routes = [
     {
@@ -35,6 +36,10 @@ export const routes: Routes = [
     {
         path: 'panel-control',
         component: PanelControlComponent
+    },
+    {
+        path: 'emergency-update',
+        component: EmergenciasUpdateComponent
     },
     {
         path:'**',
