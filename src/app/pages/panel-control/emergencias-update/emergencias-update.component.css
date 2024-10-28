@@ -15,6 +15,6 @@ section > form{
     justify-content: space-between;
 }
 
-section > form > article{
+form > .container > .row{
     padding: 2vh;
 }
