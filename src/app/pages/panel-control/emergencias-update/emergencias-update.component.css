@@ -1,0 +1,20 @@
+section{
+    display: flex;
+    justify-content: space-between;
+    padding: 2vh;
+    background-color: lightgray;
+    gap: 2vh;
+
+}
+
+section > form{
+    border-radius: 2vh;
+    border: 1px lightgray solid;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+}
+
+section > form > article{
+    padding: 2vh;
+}
