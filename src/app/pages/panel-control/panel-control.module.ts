@@ -11,7 +11,7 @@ import { EmergenciaComponent } from '../emergencia/emergencia.component';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
   ]
 })
 export class PanelControlModule { }

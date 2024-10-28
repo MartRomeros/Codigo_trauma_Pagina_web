@@ -1,5 +1,5 @@
 section:nth-child(1) {
-    background-color: rgb(194, 192, 192);
+    background-color: lightcyan;
     padding: 2vh;
     height: 30vh;
     display: flex;
@@ -43,7 +43,7 @@ section:nth-child(2) > h1{
 
 /* tercer seccion */
 section:nth-child(3){
-    background-color: rgb(194, 192, 192);
+    background-color: lightcyan;
     padding: 2vh;
     display: flex;
     justify-content: space-around;

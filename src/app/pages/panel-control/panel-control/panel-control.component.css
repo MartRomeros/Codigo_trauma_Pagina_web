@@ -1,32 +1,23 @@
-.seccionForm {
-    max-width: 800px;
-    margin: 3rem auto;
-    padding: 25px;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-  }
-  
-  h2 {
-    font-size: calc(1.325rem + .9vw);
-    display: flex;
-    justify-content: center;
-  }
-  
-  .grupos {
-    margin-bottom: 25px;
-  }
-  
-  .btn-primary {
-    background-color: darkcyan;
-    border-color: darkcyan;
-    margin-left: 33%;
-    font-size: 18px;
-    width: 15rem;
-    font-family: "Inter", sans-serif;
-  }
-  
-  label {
-    display: flex;
-    justify-content: center;
-    margin: 0.4rem;
-  }
+nav{
+  background-color: lightcyan;
+  padding: 2vh;
+}
+
+section{
+  padding: 2vh;
+  display: flex;
+  justify-content: space-around;
+  gap: 2vh;
+}
+
+.card-body > form{
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+}
+
+.grupos{
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+}

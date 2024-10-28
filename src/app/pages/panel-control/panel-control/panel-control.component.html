@@ -1,40 +1,43 @@
 <main class="container-fluid">
-    <section class="seccionForm">
-        <h2>Registro de Emergencia de Urgencias</h2>
-        <form>
-            <div class="grupos">
-                <label for="descripcion">Descripción de la Emergencia:</label>
-                <textarea id="descripcion" formControlName="descripcion" class="form-control" rows="3"></textarea>
+    <nav class="row">
+        <h1>Panel de control <i class="bi bi-graph-up-arrow"></i></h1>
+    </nav>
+    <section class="row">
+        <div class="card col-md-3">
+            <div class="card-body">
+                <h5 class="card-title">Emergencias activas <i class="bi bi-activity"></i></h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                    card's content.</p>
             </div>
-
-            <div class="grupos">
-                <label for="victimas">Víctimas Involucradas:</label>
-                <input type="number" id="victimas" formControlName="victimas" class="form-control" />
+        </div>
+        <div class="card col-md-3">
+            <div class="card-body">
+                <h5 class="card-title">Personal disponible <i class="bi bi-people-fill"></i></h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                    card's content.</p>
             </div>
-
-            <div class="grupos">
-                <label for="tipo">Tipo de Emergencia:</label>
-                <select id="tipo" formControlName="tipo" class="form-control" >
-                    <option value="escoja">Escoja Una Opcion (Haga click para ver las opciones)</option>
-                    <option value="urgente">Urgente</option>
-                    <option value="consulta">Consulta</option>
-                    <option value="chequeo">Chequeo Médico</option>
-                </select>
+        </div>
+        <div class="card col-md-3">
+            <div class="card-body">
+                <h5 class="card-title">Registrar emergencia <i class="bi bi-exclamation-triangle-fill"></i></h5>
+                <form>
+                    <div class="grupos">
+                        <label for="tipo">Tipo de Emergencia:</label>
+                        <select id="tipo" class="form-control">
+                            <option selected >Seleccione una opcion</option>
+                            <option value="urgente">Urgente</option>
+                            <option value="consulta">Consulta</option>
+                            <option value="chequeo">Chequeo Médico</option>
+                        </select>
+                    </div>
+                    <div class="grupos">
+                        <label for="descripcion">Descripción de la Emergencia:</label>
+                        <textarea id="descripcion" class="form-control"
+                            rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Registrar Emergencia</button>
+                </form>
             </div>
-
-            <div class="grupos">
-                <label for="tipoArea">Área del Hospital:</label>
-                <select id="tipoArea" formControlName="tipoArea" class="form-control">
-                    <option id="textoPlomo" value="escoja">Escoja Una Opcion (Haga click para ver las opciones)</option>
-                    <option value="cirugía intensa">Cirugía Intensa</option>
-                    <option value="enfermería">Enfermería</option>
-                    <option value="urgencias">Urgencias</option>
-                    <option value="cuidados intensivos">Cuidados Intensivos</option>
-                    <option value="laboratorio">Laboratorio</option>
-                </select>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Registrar Emergencia</button>
-        </form>
+        </div>
     </section>
 </main>
