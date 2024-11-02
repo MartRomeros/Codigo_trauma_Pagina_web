@@ -4,19 +4,20 @@
 
 <main class="container-fluid">
     <section class="row">
-        <form class="col-md-6">
+        <form class="col-md-6" [formGroup]="loginForm" (ngSubmit)="login()">
             <fieldset>
                 <h5>Inicio de Sesión <i class="bi bi-door-closed-fill"></i></h5>
                 <h6>Completa los campos para ingresar con tu perfil</h6>
             </fieldset>
             <div class="mb-3">
                 <label for="email" class="form-label">Correo electronico</label>
-                <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+                <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
+                    formControlName="correo">
                 <div id="emailHelp" class="form-text">Ingresa tu correo electronico</div>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password">
+                <input type="password" class="form-control" id="password" formControlName="password">
                 <div id="passwordHelp" class="form-text">Ingresa tu contraseña</div>
             </div>
             <fieldset class="login-options">
@@ -27,7 +28,7 @@
 
             </fieldset>
 
-            <button type="button" class="btn btn-info" (click)="login()">Ingresar</button>
+            <button type="submit" class="btn btn-info">Ingresar</button>
         </form>
     </section>
 </main>
