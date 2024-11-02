@@ -2,29 +2,34 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { RegistroComponent } from './pages/auth/registro/registro.component';
 import { ForgotPasswordComponent } from './pages/auth/forgot-password/forgot-password.component';
+import { RecepcionHomeComponent } from './pages/recepcion/recepcion-home/recepcion-home.component';
 
 export const routes: Routes = [
     {
-        path:'',
+        path: '',
         redirectTo: 'login',
-        pathMatch:'full'
+        pathMatch: 'full'
     },
     {
-        path:'login',
+        path: 'login',
         component: LoginComponent
     },
     {
-        path:'registro',
+        path: 'registro',
         component: RegistroComponent
     },
     {
-        path:'forgot-password',
+        path: 'forgot-password',
         component: ForgotPasswordComponent
     },
     {
-        path:'**',
-        redirectTo: 'login',
-        pathMatch:'full'
+        path: 'recepcion',
+        component: RecepcionHomeComponent
     },
-    
+    {
+        path: '**',
+        redirectTo: 'login',
+        pathMatch: 'full'
+    },
+
 ];

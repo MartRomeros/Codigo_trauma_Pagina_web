@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth/auth.service';
 import { FormBuilder, Validators } from '@angular/forms';
 
@@ -12,10 +11,11 @@ import { FormBuilder, Validators } from '@angular/forms';
 
 export class LoginComponent {
 
-  loginForm: any
+  loginForm?: any
   cargando?: boolean
+  tipoUsuario?: string
 
-  constructor(private router: Router, private _auth: AuthService, private fb: FormBuilder) {
+  constructor(private _auth: AuthService, private fb: FormBuilder) {
 
     this.loginForm = fb.group({
       correo: ['', [Validators.required, Validators.email]],
@@ -40,7 +40,8 @@ export class LoginComponent {
 
       this._auth.login(data).subscribe({
         next: (data) => {
-          console.log(data)
+          this.tipoUsuario = data.user.cargo
+          this._auth.verificarTipoUsuario(this.tipoUsuario!)
         },
         error: (err) => {
           console.log(err)
@@ -50,6 +51,8 @@ export class LoginComponent {
     }, 3000);
     this.cargando = true
   }
+
+
 
 
 }
