@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -7,17 +8,19 @@ import { Router } from '@angular/router';
   styleUrl: './login.component.css',
 
 })
-export class LoginComponent {
-  cargando?:boolean
 
-  constructor(private router:Router){
+export class LoginComponent {
+
+  cargando?: boolean
+
+  constructor(private router: Router, private _auth: AuthService) {
 
   }
 
-  login(){
+  login() {
     setTimeout(() => {
       this.cargando = false
-      this.router.navigate(['home'])
+      this.router.navigate(['panel-control'])
     }, 3000);
     this.cargando = true
   }

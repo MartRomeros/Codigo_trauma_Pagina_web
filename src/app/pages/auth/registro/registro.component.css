@@ -3,12 +3,13 @@ section {
     justify-content: center;
     align-items: center;
     height: 97vh;
+    padding: 2vh;
 }
 
 form {
     display: flex;
     flex-direction: column;
-    gap: 2vh;
+    padding: 2vh;
 }
 
 fieldset > h5,
@@ -26,7 +27,7 @@ fieldset > h6{
     color: black;
 }
 
-.form-control{
+.form-control,.form-select{
     border: 1px cyan solid;
 }
 

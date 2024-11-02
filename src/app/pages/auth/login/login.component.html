@@ -1,5 +1,5 @@
 @if(cargando){
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+<mat-progress-bar mode="indeterminate"></mat-progress-bar>
 }
 
 <main class="container-fluid">
@@ -17,10 +17,14 @@
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
                 <input type="password" class="form-control" id="password">
+                <div id="passwordHelp" class="form-text">Ingresa tu contraseña</div>
             </div>
             <fieldset class="login-options">
-                <a href="/forgot-password">¿Olvidaste tu contraseña?</a>
-                <a href="/registro">Registrarme <i class="bi bi-person-fill-add"></i></a>
+
+                <a routerLink="/forgot-password">¿Olvidaste tu contraseña?</a>
+
+                <a routerLink="/registro">Registrarme <i class="bi bi-person-fill-add"></i></a>
+
             </fieldset>
 
             <button type="button" class="btn btn-info" (click)="login()">Ingresar</button>

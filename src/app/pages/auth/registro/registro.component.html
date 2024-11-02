@@ -1,44 +1,48 @@
 @if(cargando){
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+<mat-progress-bar mode="indeterminate"></mat-progress-bar>
 }
 
 <main class="container-fluid">
     <section class="row">
-        <form class="col-md-6">
+        <form class="col-md-6" [formGroup]="formularioRegistro" (ngSubmit)="registrar()">
             <fieldset>
                 <h5>Registro de usuario <i class="bi bi-person-fill-add"></i></h5>
                 <h6>Completa los campos para crear tu perfil de usuario</h6>
             </fieldset>
             <div class="mb-3">
-                <label for="rut" class="form-label">Rut de usuario</label>
-                <input type="text" class="form-control" id="rut">
-                <div id="emailHelp" class="form-text">Ingresa tu rut sin puntos ni guión</div>
-            </div>
-            <div class="mb-3">
                 <label for="name" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="name">
+                <input type="text" class="form-control" id="name" formControlName="nombre">
                 <div id="emailHelp" class="form-text">Ingresa tu nombre</div>
             </div>
             <div class="mb-3">
                 <label for="last-name" class="form-label">Apellido</label>
-                <input type="text" class="form-control" id="last-name">
+                <input type="text" class="form-control" id="last-name" formControlName="apellido">
                 <div id="emailHelp" class="form-text">Ingresa tus apellidos</div>
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Correo electronico</label>
-                <input type="email" class="form-control" id="email">
+                <input type="email" class="form-control" id="email" formControlName="correo">
                 <div id="emailHelp" class="form-text">Ingresa tu correo electronico</div>
             </div>
             <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password">
-                <div id="emailHelp" class="form-text">Ingresa tu contraseña</div>
+                <label for="cargo" class="form-label">Cargo en el hospital</label>
+                <select class="form-select" id="cargo" formControlName="cargo">
+                    <option value="personal clinico">Personal Clinico</option>
+                    <option value="recepcionista">Recepcionista</option>
+                    <option value="sub director">Sub director</option>
+                </select>
+                <div id="cargoHelp" class="form-text">Selecciona tu cargo en el hospital</div>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">contraseña</label>
+                <input type="password" class="form-control" id="password" formControlName="password">
+                <div id="passwordHelp" class="form-text">Ingresa tu contraseña</div>
             </div>
             <fieldset class="login-options">
-                <a href="/login">Ya tengo una cuenta</a>
+                <a routerLink="/login">Ya tengo una cuenta</a>
             </fieldset>
 
-            <button type="button" class="btn btn-info">Ingresar</button>
+            <button type="submit" class="btn btn-info">Ingresar</button>
         </form>
     </section>
 </main>
