@@ -7,17 +7,14 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                @if(userToken === 'null'){
-                    <li class="nav-item">
-                        <a class="nav-link" href="./panel-control">Panel de control</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="">Cerrar Sesión</a>
-                    </li>
+                @if(verificarToken()){
+                <li class="nav-item">
+                    <a class="nav-link" (click)="logout()">Cerrar Sesión</a>
+                </li>
                 }@else {
-                    <li class="nav-item">
-                        <a class="nav-link" href="">Iniciar Sesión</a>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/login">Iniciar Sesión</a>
+                </li>
                 }
             </ul>
         </div>

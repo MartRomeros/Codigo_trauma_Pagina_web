@@ -105,6 +105,11 @@ export class AuthService {
     return contrasena;
   }
 
+  logout(){
+    localStorage.clear()
+    this.router.navigate(['login'])
+  }
+
 
 
 }

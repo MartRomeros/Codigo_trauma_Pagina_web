@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth/auth.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MensajeriaService } from '../../../services/mensajeria/mensajeria.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,18 +11,32 @@ import { MensajeriaService } from '../../../services/mensajeria/mensajeria.servi
 
 })
 
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   loginForm?: any
   cargando?: boolean
   tipoUsuario?: string
 
-  constructor(private _auth: AuthService, private fb: FormBuilder, private mensajeria: MensajeriaService) {
+
+  constructor(private _auth: AuthService, private fb: FormBuilder, private mensajeria: MensajeriaService, private router: Router) {
 
     this.loginForm = fb.group({
       correo: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
     })
+
+  }
+
+  ngOnInit(): void {
+    if (!localStorage.getItem('usuario')) {
+      this.router.navigate(['login'])
+    }
+
+    if (!localStorage.getItem('token')) {
+      this.router.navigate(['login'])
+    }
+
+    this._auth.verificarTipoUsuario(JSON.parse(localStorage.getItem('usuario') || '[]'))
 
   }
 
@@ -45,10 +60,12 @@ export class LoginComponent {
     this._auth.login(data).subscribe({
       next: (data) => {
         this.tipoUsuario = data.user.cargo
+        localStorage.setItem('token', JSON.stringify(data.token))
+        localStorage.setItem('usuario', JSON.stringify(data.user.cargo))
         this._auth.verificarTipoUsuario(this.tipoUsuario!)
       },
-      error: (err) => {
-        console.log(err)
+      error: (err: any) => {
+        this.mensajeria.presentarAlerta(err.error.message)
       }
     })
 
