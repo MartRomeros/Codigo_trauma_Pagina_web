@@ -11,18 +11,21 @@
             </fieldset>
             <div class="mb-3">
                 <label for="name" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="name" formControlName="nombre">
-                <div id="emailHelp" class="form-text">Ingresa tu nombre</div>
+                <input type="text" class="form-control" id="name" formControlName="nombre"
+                    placeholder="Ingresa tu nombre">
+                @if (validarCampo('nombre')) {<div id="emailHelp" class="text-danger">Nombre Invalido</div>}
             </div>
             <div class="mb-3">
                 <label for="last-name" class="form-label">Apellido</label>
-                <input type="text" class="form-control" id="last-name" formControlName="apellido">
-                <div id="emailHelp" class="form-text">Ingresa tus apellidos</div>
+                <input type="text" class="form-control" id="last-name" formControlName="apellido"
+                    placeholder="Ingresa tu apellido">
+                @if (validarCampo('apellido')) {<div id="emailHelp" class="text-danger">Apellido Invalido</div>}
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Correo electronico</label>
-                <input type="email" class="form-control" id="email" formControlName="correo">
-                <div id="emailHelp" class="form-text">Ingresa tu correo electronico</div>
+                <input type="email" class="form-control" id="email" formControlName="correo"
+                    placeholder="Ingresa tu correo electronico">
+                @if (validarCampo('correo')) {<div id="emailHelp" class="text-danger">Correo Invalido</div>}
             </div>
             <div class="mb-3">
                 <label for="cargo" class="form-label">Cargo en el hospital</label>
@@ -31,18 +34,17 @@
                     <option value="recepcionista">Recepcionista</option>
                     <option value="sub director">Sub director</option>
                 </select>
-                <div id="cargoHelp" class="form-text">Selecciona tu cargo en el hospital</div>
+                @if (validarCampo('cargo')) {<div id="emailHelp" class="text-danger">Cargo Invalido</div>}
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">contraseña</label>
-                <input type="password" class="form-control" id="password" formControlName="password">
-                <div id="passwordHelp" class="form-text">Ingresa tu contraseña</div>
+                <input type="password" class="form-control" id="password" formControlName="password" placeholder="Ingresa tu contraseña">
+                @if (validarCampo('password')) {<div id="emailHelp" class="text-danger">Contraseña Invalida!</div>}
             </div>
             <fieldset class="login-options">
                 <a routerLink="/login">Ya tengo una cuenta</a>
             </fieldset>
-
-            <button type="submit" class="btn btn-info">Ingresar</button>
+            <button type="submit" class="btn btn-info">Registrarme</button>
         </form>
     </section>
 </main>

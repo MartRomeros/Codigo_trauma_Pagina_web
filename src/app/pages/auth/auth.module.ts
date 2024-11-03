@@ -8,7 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { RegistroComponent } from './registro/registro.component';
-
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2'
 
 
 
@@ -19,7 +19,8 @@ import { RegistroComponent } from './registro/registro.component';
     MatProgressBarModule,
     ReactiveFormsModule,
     RouterLink,
-    HttpClientModule
+    HttpClientModule,
+    SweetAlert2Module
   ],
   exports: [LoginComponent, ForgotPasswordComponent, RegistroComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

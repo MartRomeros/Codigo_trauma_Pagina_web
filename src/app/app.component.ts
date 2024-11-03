@@ -14,7 +14,11 @@ import { RecepcionModule } from './pages/recepcion/recepcion.module';
   providers: [HttpClientModule]
 })
 export class AppComponent {
+
   title = 'codigo-trauma-web';
+
+  userToken: string = JSON.parse(localStorage.getItem('token') || 'null')
+
   constructor(private router: Router) {
 
   }

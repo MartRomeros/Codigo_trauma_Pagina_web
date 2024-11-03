@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth/auth.service';
 import { Router } from '@angular/router';
+import { MensajeriaService } from '../../../services/mensajeria/mensajeria.service';
 
 @Component({
   selector: 'app-registro',
@@ -11,10 +12,10 @@ import { Router } from '@angular/router';
 export class RegistroComponent {
 
   cargando: boolean = false
-  formularioRegistro?: any
+  formularioRegistro?: FormGroup | any
 
 
-  constructor(private fb: FormBuilder, private _authService: AuthService, private router: Router) {
+  constructor(private fb: FormBuilder, private _authService: AuthService, private router: Router, private mensajeria: MensajeriaService) {
 
     this.formularioRegistro = fb.group({
       nombre: ['', Validators.required],
@@ -29,6 +30,10 @@ export class RegistroComponent {
 
   registrar() {
     this.cargando = true
+
+    if (!this.validarCampos()) {
+      return
+    }
 
     const data = {
       email: this.formularioRegistro.get('correo').value,
@@ -58,5 +63,23 @@ export class RegistroComponent {
 
   }
 
+  validarCampo(nombre: string): boolean {
+    return this.formularioRegistro.get(nombre).errors && this.formularioRegistro.get(nombre).touched
+  }
+
+  validarCampos(): boolean {
+
+    const campos = Object.keys(this.formularioRegistro.controls)
+
+    for (let index = 0; index < campos.length; index++) {
+      const campo = this.formularioRegistro.get(campos[index])
+      if (campo.errors) {
+        this.cargando = false
+        this.mensajeria.presentarAlerta('Verifica los campos!')
+        return false
+      }
+    }
+    return true
+  }
 
 }

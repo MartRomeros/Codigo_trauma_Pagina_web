@@ -25,6 +25,7 @@ fieldset > h6{
 .login-options > a{
     text-decoration: none;
     color: black;
+    padding: 2vh;
 }
 
 .form-control,.form-select{
