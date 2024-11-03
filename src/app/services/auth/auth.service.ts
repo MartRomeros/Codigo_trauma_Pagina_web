@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 export class AuthService {
 
   baseUrl: string = 'https://codigotraumabackend-production.up.railway.app/'
-  baseForgotPassword:string = 'https://myths.cl/api/reset_password.php'
+  baseForgotPassword: string = 'https://myths.cl/api/reset_password.php'
 
   constructor(private client: HttpClient, private router: Router) { }
 
@@ -38,7 +38,16 @@ export class AuthService {
 
   }
 
-  recuperarContraseña(){
+  recuperarContraseña() {
+
+    const data = {
+      "nombre": "Nombre del usuario",
+      "app": "Nombre de tu app",
+      "clave": "La nueva clave generada",
+      "email": "elemaildelusuario@algo.com"
+    }
+
+    this.client.post(this.baseForgotPassword, data)
 
   }
 
