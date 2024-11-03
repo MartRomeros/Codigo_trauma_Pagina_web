@@ -5,8 +5,8 @@
         <h2>Nueva Emergencia</h2>
         <form (ngSubmit)="AgregarEmergencia()" [formGroup]="recepcionForm">
             <div class="form-group">
-                <input type="text" name="descripcion" placeholder="Descripción de la emergencia"
-                    formControlName="descripcion">
+                <textarea type="text" name="descripcion" placeholder="Descripción de la emergencia"
+                    formControlName="descripcion"></textarea>
             </div>
             <div class="form-group">
                 <input type="number" name="victimas" placeholder="Número de víctimas"
@@ -39,7 +39,7 @@
                     <td>{{ emergencia.id }}</td>
                     <td>{{ emergencia.fecha }}</td>
                     <td>{{ emergencia.descripcion }}</td>
-                    <td>{{ emergencia.cantidadVictimas }}</td>
+                    <td>{{ emergencia.victimas }}</td>
                 </tr>
             </tbody>
         </table>

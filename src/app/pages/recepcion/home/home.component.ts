@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EmergenciasService } from '../../../services/emergencia/emergencias.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MensajeriaService } from '../../../services/mensajeria/mensajeria.service';
+import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-recepcion-home',
@@ -17,7 +18,7 @@ export class HomeComponent implements OnInit {
   fechaActual: Date = new Date()
   fecha: string = this.fechaActual.getDate() + '/' + (this.fechaActual.getMonth() + 1) + '/' + this.fechaActual.getFullYear()
 
-  constructor(private _emergencia: EmergenciasService, private fb: FormBuilder, private mensajeria: MensajeriaService) {
+  constructor(private _emergencia: EmergenciasService, private fb: FormBuilder, private mensajeria: MensajeriaService, private _auth: AuthService) {
     this.recepcionForm = fb.group({
       cantidadVictimas: ['', [Validators.required]],
       descripcion: ['', [Validators.required]],
@@ -46,13 +47,13 @@ export class HomeComponent implements OnInit {
 
     const data = {
       descripcion: this.descripcion,
-      cantidadVictimas: this.victimas,
+      victimas: this.victimas,
       fecha: this.fecha
     }
 
     this._emergencia.crearEmergencia(data).subscribe({
       next: (data) => {
-        console.log(data)
+        this.mensajeria.presentarAlertaSucess(data.message)
         this._emergencia.traerEmergencias().subscribe({
           next: (data) => {
             this.emergencias = data
@@ -70,6 +71,11 @@ export class HomeComponent implements OnInit {
     this._emergencia.traerEmergencias().subscribe({
       next: (data) => {
         this.emergencias = data
+      },
+      error: (err) => {
+        this.mensajeria.presentarAlerta('error en la autenticacion, deberas iniciar sesion otra vez!')
+        this._auth.logout()
+
       }
     })
 
