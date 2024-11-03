@@ -9,7 +9,7 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 @if(verificarToken()){
                 <li class="nav-item">
-                    <a class="nav-link" (click)="logout()">Cerrar Sesión</a>
+                    <a class="nav-link" routerLink="/login" (click)="logout()">Cerrar Sesión</a>
                 </li>
                 }@else {
                 <li class="nav-item">

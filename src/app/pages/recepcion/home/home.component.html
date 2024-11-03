@@ -3,29 +3,32 @@
 
     <div class="card">
         <h2>Nueva Emergencia</h2>
-        <form (ngSubmit)="AgregarEmergencia()">
+        <form (ngSubmit)="AgregarEmergencia()" [formGroup]="recepcionForm">
             <div class="form-group">
-                <input type="text" [(ngModel)]="descripcion" name="descripcion"
-                    placeholder="Descripción de la emergencia" required minlength="5">
+                <input type="text" name="descripcion" placeholder="Descripción de la emergencia"
+                    formControlName="descripcion">
             </div>
             <div class="form-group">
-                <input type="number" [(ngModel)]="victimas" name="victimas" placeholder="Número de víctimas" required
-                    min="1">
+                <input type="number" name="victimas" placeholder="Número de víctimas"
+                    formControlName="cantidadVictimas">
             </div>
             <button type="submit">Registrar Emergencia</button>
         </form>
     </div>
 
+    <!--
     <div class="card">
         <h2>Total de Víctimas</h2>
-        <p class="total-victimas">{{ totalVictimas }}</p>
+        <p class="total-victimas">0</p>
     </div>
+    -->
 
     <div class="card">
         <h2>Historial de Emergencias</h2>
         <table>
             <thead>
                 <tr>
+                    <th>Id</th>
                     <th>Fecha</th>
                     <th>Descripción</th>
                     <th>Víctimas</th>
@@ -33,9 +36,10 @@
             </thead>
             <tbody>
                 <tr *ngFor="let emergencia of emergencias">
+                    <td>{{ emergencia.id }}</td>
                     <td>{{ emergencia.fecha }}</td>
                     <td>{{ emergencia.descripcion }}</td>
-                    <td>{{ emergencia.victimas }}</td>
+                    <td>{{ emergencia.cantidadVictimas }}</td>
                 </tr>
             </tbody>
         </table>

@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
-interface Emergencia {
-  id: number;
-  fecha: string;
-  descripcion: string;
-  victimas: number;
-}
+import { EmergenciasService } from '../../../services/emergencia/emergencias.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MensajeriaService } from '../../../services/mensajeria/mensajeria.service';
 
 @Component({
   selector: 'app-recepcion-home',
@@ -14,72 +10,69 @@ interface Emergencia {
 })
 export class HomeComponent implements OnInit {
 
-  emergencias: Emergencia[] = [];
-  descripcion: string = '';
-  victimas: string = '';
+  recepcionForm!: FormGroup
+  emergencias: any = [];
+  descripcion?: string;
+  victimas?: number
+  fechaActual: Date = new Date()
+  fecha: string = this.fechaActual.getDate() + '/' + (this.fechaActual.getMonth() + 1) + '/' + this.fechaActual.getFullYear()
+
+  constructor(private _emergencia: EmergenciasService, private fb: FormBuilder, private mensajeria: MensajeriaService) {
+    this.recepcionForm = fb.group({
+      cantidadVictimas: ['', [Validators.required]],
+      descripcion: ['', [Validators.required]],
+    })
+  }
 
   ngOnInit() {
     this.cargarEmergencias();
-    this.eliminarEmergenciasExpiradas();
   }
 
   AgregarEmergencia() {
+
+    this.descripcion = this.recepcionForm.get('descripcion')?.value
+    this.victimas = this.recepcionForm.get('cantidadVictimas')?.value
+
     if (!this.descripcion || this.descripcion.length < 5) {
-      alert('La descripción es obligatoria y debe tener al menos 5 caracteres.');
+      this.mensajeria.presentarAlerta('La descripción es obligatoria y debe tener al menos 5 caracteres.')
       return;
     }
 
-    const numeroVictimas = parseInt(this.victimas);
-    if (!this.victimas || isNaN(numeroVictimas) || numeroVictimas < 1) {
-      alert('El número de víctimas es obligatorio y debe ser al menos 1.');
+    if (!this.victimas || this.victimas <= 0) {
+      this.mensajeria.presentarAlerta('La cantidad de victimas es obligatoria')
       return;
     }
 
-    const nuevaEmergencia: Emergencia = {
-      id: Date.now(),
-      fecha: new Date().toLocaleString(),
+
+    const data = {
       descripcion: this.descripcion,
-      victimas: numeroVictimas
-    };
-    this.emergencias.unshift(nuevaEmergencia);
-    this.guardarEmergencias();
-    this.descripcion = '';
-    this.victimas = '';
-  }
+      cantidadVictimas: this.victimas,
+      fecha: this.fecha
+    }
 
-  get totalVictimas(): number {
-    return this.emergencias.reduce((total, emergencia) => total + emergencia.victimas, 0);
-  }
+    this._emergencia.crearEmergencia(data).subscribe({
+      next: (data) => {
+        console.log(data)
+        this._emergencia.traerEmergencias().subscribe({
+          next: (data) => {
+            this.emergencias = data
+            console.log(this.emergencias)
+          }
+        })
+      }
+    })
 
-  private guardarEmergencias() {
-    const now = new Date();
-    const endOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999).getTime();
-    localStorage.setItem('emergencias', JSON.stringify(this.emergencias));
-    localStorage.setItem('expiracion', endOfDay.toString());
+
   }
 
   private cargarEmergencias() {
-    const expiracion = localStorage.getItem('expiracion');
-    const now = Date.now();
-    if (expiracion && now > parseInt(expiracion)) {
-      localStorage.removeItem('emergencias');
-      localStorage.removeItem('expiracion');
-      this.emergencias = [];
-    } else {
-      const data = localStorage.getItem('emergencias');
-      if (data) {
-        this.emergencias = JSON.parse(data);
+
+    this._emergencia.traerEmergencias().subscribe({
+      next: (data) => {
+        this.emergencias = data
       }
-    }
+    })
+
   }
 
-  private eliminarEmergenciasExpiradas() {
-    const now = Date.now();
-    const expiracion = localStorage.getItem('expiracion');
-    if (expiracion && now > parseInt(expiracion)) {
-      this.emergencias = [];
-      localStorage.removeItem('emergencias');
-      localStorage.removeItem('expiracion');
-    }
-  }
 }
