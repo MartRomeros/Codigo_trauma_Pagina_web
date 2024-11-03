@@ -24,7 +24,7 @@ export class EmergenciasService {
       'Authorization': `Bearer ${token}`
     })
 
-    return this.http.get(this.baseUrlProduccion + '/emergencias', { headers })
+    return this.http.get(this.baseUrlPruebas + '/emergencias', { headers })
   }
 
   crearEmergencia(data: any): Observable<any> {
@@ -34,7 +34,7 @@ export class EmergenciasService {
       'Authorization': `Bearer ${token}`
     })
 
-    return this.http.post(this.baseUrlProduccion + '/crearemergencia', data, { headers })
+    return this.http.post(this.baseUrlPruebas + '/crearemergencia', data, { headers })
   }
 
 }

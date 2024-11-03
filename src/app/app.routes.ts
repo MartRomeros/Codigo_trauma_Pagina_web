@@ -4,6 +4,7 @@ import { RegistroComponent } from './pages/auth/registro/registro.component';
 import { ForgotPasswordComponent } from './pages/auth/forgot-password/forgot-password.component';
 import { HomeComponent } from './pages/recepcion/home/home.component';
 import { HomeMedicComponent } from './pages/medico/home/home.component';
+import { AdminComponent } from './pages/admin/admin/admin.component';
 
 export const routes: Routes = [
     {
@@ -30,6 +31,10 @@ export const routes: Routes = [
     {
         path: 'medico',
         component: HomeMedicComponent //home de medico!!
+    },
+    {
+        path: 'admin',
+        component: AdminComponent //home de medico!!
     },
     {
         path: '**',

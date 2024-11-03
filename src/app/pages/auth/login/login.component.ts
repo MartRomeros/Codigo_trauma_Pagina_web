@@ -38,12 +38,14 @@ export class LoginComponent implements OnInit {
 
     this._auth.verificarTipoUsuario(JSON.parse(localStorage.getItem('usuario') || '[]'))
 
+    this.cargando = false
+
   }
 
 
 
   login() {
-
+    this.cargando = true
     if (!this.validarCampos()) {
       return
     }
@@ -62,10 +64,12 @@ export class LoginComponent implements OnInit {
         this.tipoUsuario = data.user.cargo
         localStorage.setItem('token', JSON.stringify(data.token))
         localStorage.setItem('usuario', JSON.stringify(data.user.cargo))
+        this.cargando = false
         this._auth.verificarTipoUsuario(this.tipoUsuario!)
       },
       error: (err: any) => {
         this.mensajeria.presentarAlerta(err.error.message)
+        this.cargando = false
       }
     })
 
