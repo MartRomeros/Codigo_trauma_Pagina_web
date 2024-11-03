@@ -2,7 +2,8 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { RegistroComponent } from './pages/auth/registro/registro.component';
 import { ForgotPasswordComponent } from './pages/auth/forgot-password/forgot-password.component';
-import { RecepcionHomeComponent } from './pages/recepcion/recepcion-home/recepcion-home.component';
+import { HomeComponent } from './pages/recepcion/home/home.component';
+import { HomeMedicComponent } from './pages/medico/home/home.component';
 
 export const routes: Routes = [
     {
@@ -24,7 +25,11 @@ export const routes: Routes = [
     },
     {
         path: 'recepcion',
-        component: RecepcionHomeComponent
+        component: HomeComponent //home de recepcion!!
+    },
+    {
+        path: 'medico',
+        component: HomeMedicComponent //home de medico!!
     },
     {
         path: '**',
