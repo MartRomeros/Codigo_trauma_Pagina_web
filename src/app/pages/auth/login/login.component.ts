@@ -29,6 +29,10 @@ export class LoginComponent {
 
   login() {
 
+    if (!this.validarCampos()) {
+      return
+    }
+
     this.cargando = false
 
     const data = {

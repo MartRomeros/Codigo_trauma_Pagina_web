@@ -11,14 +11,14 @@
             </fieldset>
             <div class="mb-3">
                 <label for="email" class="form-label">Correo electronico</label>
-                <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
-                    formControlName="correo">
-                <div id="emailHelp" class="form-text">Ingresa tu correo electronico</div>
+                <input type="email" class="form-control" id="email" formControlName="correo"
+                    placeholder="ingresa tu correo electronico">
+                @if (validarCampo('correo')) {<div id="emailHelp" class="text-danger">Email requerido</div>}
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" formControlName="password">
-                <div id="passwordHelp" class="form-text">Ingresa tu contraseña</div>
+                <input type="password" class="form-control" id="password" formControlName="password" placeholder="ingresa tu contraseña">
+                @if (validarCampo('password')) {<div id="emailHelp" class="text-danger">Contraseña requerida</div>}
             </div>
             <fieldset class="login-options">
 
