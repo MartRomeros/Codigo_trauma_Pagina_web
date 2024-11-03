@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MensajeriaService } from '../../../services/mensajeria/mensajeria.service';
+import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -11,7 +12,7 @@ export class ForgotPasswordComponent {
 
   forgotForm!: FormGroup
 
-  constructor(private fb: FormBuilder, private mensajeria: MensajeriaService) {
+  constructor(private fb: FormBuilder, private mensajeria: MensajeriaService, private auth: AuthService) {
     this.forgotForm = fb.group({
       correo: ['', [Validators.required, Validators.email]]
     })
@@ -23,6 +24,9 @@ export class ForgotPasswordComponent {
       this.mensajeria.presentarAlerta('Verifica tu correo!')
       return
     }
+
+    const correo = this.forgotForm.get('correo')?.value
+    this.auth.recuperarContrasenna(correo)
 
   }
 

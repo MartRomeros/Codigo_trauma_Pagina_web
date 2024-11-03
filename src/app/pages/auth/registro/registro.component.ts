@@ -48,12 +48,13 @@ export class RegistroComponent {
 
         console.log(data)
         this.cargando = false
+        this.mensajeria.presentarAlertaSucess('usuario creado redirigiendo al inicio de sesión')
         this.router.navigate(['login'])
 
 
       },
       error: (err: any) => {
-        console.log(err)
+        this.mensajeria.presentarAlerta(err.error.message)
         this.cargando = false
       }
 
