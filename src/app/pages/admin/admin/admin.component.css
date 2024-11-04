@@ -22,3 +22,9 @@ th {
     /* Define la altura máxima de la tabla */
     overflow: auto;
 }
+
+.buscar-atencion{
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+}

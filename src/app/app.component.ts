@@ -5,11 +5,12 @@ import { Router } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { RecepcionModule } from './pages/recepcion/recepcion.module';
 import { AuthService } from './services/auth/auth.service';
+import { AdminModule } from './pages/admin/admin.module';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, AuthModule, RouterLink, HttpClientModule, RecepcionModule],
+  imports: [RouterOutlet, AuthModule, RouterLink, HttpClientModule, RecepcionModule, AdminModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   providers: [HttpClientModule]

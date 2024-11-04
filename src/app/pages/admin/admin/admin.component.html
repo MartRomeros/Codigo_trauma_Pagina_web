@@ -8,22 +8,19 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">Id</th>
-                            <th scope="col">N° Victimas</th>
-                            <th scope="col">Fecha</th>
-                            <th scope="col">Estado</th>
-                            <th scope="col">Opciones</th>
+                            <th>Id</th>
+                            <th>N° Victimas</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>mdo</td>
-                            <td><Button class="btn btn-info">Atender</Button></td>
+                        <tr *ngFor="let item of atenciones">
+                            <th>{{item.id}}</th>
+                            <th>{{item.victimas}}</th>
+                            <th>{{item.fecha}}</th>
+                            <th>{{item.estado}}</th>
                         </tr>
-                        <tr>
                     </tbody>
                 </table>
             </div>
@@ -35,18 +32,18 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">Correo</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Apellido</th>
-                            <th scope="col">Estado</th>
+                            <th>Correo</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Estado</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>Otto</td>
+                            <th>1</th>
+                            <th>1</th>
+                            <th>1</th>
+                            <th>1</th>
                         </tr>
                     </tbody>
                 </table>
@@ -56,37 +53,31 @@
 
     <section class="row">
 
-        <form class="col-lg card">
+        <form class="col-lg card" [formGroup]="atencionForm">
             <h5>Atender emergencia</h5>
             <h6>Asigna un medico para atender la emergencia</h6>
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Id</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1"
-                    placeholder="Ingresa el id de la emergencia">
-                <button type="button" class="btn btn-info">Ingresar emergencia</button>
+            <div class="mb-3 buscar-atencion">
+                <label for="atencionId" class="form-label">Id</label>
+                <input type="number" class="form-control" id="atencionId" placeholder="Ingresa el id de la emergencia"
+                    formControlName="atencionId">
+                <button type="button" class="btn btn-info" (click)="traerAtencion()">Ingresar emergencia</button>
             </div>
             <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">N° de victimas</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                <label for="victimas" class="form-label">N° de victimas</label>
+                <input type="text" class="form-control" id="victimas" formControlName="victimas">
             </div>
             <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label">Descripción</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <label for="descripcion" class="form-label">Descripción</label>
+                <textarea class="form-control" id="descripcion" rows="3" formControlName="descripcion"></textarea>
             </div>
             <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Correo electronico</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1"
-                    placeholder="Ingresa el correo electronico del medico">
+                <label for="email" class="form-label">Correo electronico</label>
+                <input type="email" class="form-control" id="email"
+                    placeholder="Ingresa el correo electronico del medico" formControlName="email">
                 <div class="form-text" id="basic-addon4">Correo electronico del medico que atenderá la emergencia.</div>
             </div>
             <button class="btn btn-info">Atender emergencia!</button>
         </form>
-        <article class="col-lg card">
-            <h4>Emergencias atendidas: 0</h4>
-            <h4>Medicos disponibles: 0</h4>
-            <h4>Atenciones pendientes : 0</h4>
-        </article>
-
     </section>
 
 </main>
