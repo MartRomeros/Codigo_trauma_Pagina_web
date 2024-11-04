@@ -67,7 +67,7 @@ export class AdminComponent implements OnInit {
     const correo = this.atencionForm.get('email')?.value
 
 
-    this._atencion.asignarAtencion(28, "en proceso", correo)
+    this._atencion.asignarAtencion(id, "en proceso", correo)
 
   }
 
