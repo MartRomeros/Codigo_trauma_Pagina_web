@@ -60,7 +60,7 @@ export class AtencionService {
 
       await firstValueFrom(this._http.put(this.baseUrlProduccion + `atencion/editarestado/${id}`, data, { headers }))
       console.log("estado de la atencion cambiado!")
-      await firstValueFrom(this._http.put(this.baseUrlProduccion + `atencion/editaremail/${id}`, correo, { headers }))
+      await firstValueFrom(this._http.put(this.baseUrlProduccion + `atencion/editaremail/${id}`, { email: correo }, { headers }))
       console.log("correo de la atencion cambiado!")
       await firstValueFrom(this._http.put(this.baseUrlProduccion + `auth/estado/${correo}`, 'No disponible', { headers }))
       console.log("disponibilidad del medico cambiada!")
@@ -86,7 +86,7 @@ export class AtencionService {
       'Authorization': `Bearer ${token}`
     })
 
-    return this._http.get(this.baseUrlProduccion + `atencion/atencionesbyemail/${correo}`,{headers})
+    return this._http.get(this.baseUrlProduccion + `atencion/atencionesbyemail/${correo}`, { headers })
 
   }
 
