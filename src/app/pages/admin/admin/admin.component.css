@@ -1,5 +1,24 @@
 main,
 section,
-article {
+article,
+form {
     padding: 2vh;
+}
+
+section {
+    gap: 4vh;
+}
+
+article>table {
+    height: 25vh;
+}
+
+th {
+    text-align: center;
+}
+
+.table-container {
+    max-height: 300px;
+    /* Define la altura máxima de la tabla */
+    overflow: auto;
 }

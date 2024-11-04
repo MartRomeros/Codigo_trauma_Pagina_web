@@ -1,53 +1,92 @@
 <main class="container-fluid">
     <h1>Panel de administrador</h1>
     <section class="row">
-        <article class="col card">
-            <h4>Historial de emergencias</h4>
+        <article class="col-lg card">
+            <h4>Historial de Atenciones</h4>
             <h6 class="card-subtitle">Emergencias registradas</h6>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>mdo</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">N° Victimas</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>mdo</td>
+                            <td><Button class="btn btn-info">Atender</Button></td>
+                        </tr>
+                        <tr>
+                    </tbody>
+                </table>
+            </div>
+        </article>
+        <article class="col-lg card">
+            <h4>Personal del hospital</h4>
+            <h6 class="card-subtitle">Personal del hospital y su estado de disponibilidad</h6>
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Correo</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Apellido</th>
+                            <th scope="col">Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>Otto</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </article>
     </section>
 
     <section class="row">
-        <article class="col card">
-            <h4>Personal del hospital</h4>
-            <h6 class="card-subtitle">Personal del hospital y su estado de disponibilidad</h6>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>mdo</td>
-                    </tr>
-                </tbody>
-            </table>
+
+        <form class="col-lg card">
+            <h5>Atender emergencia</h5>
+            <h6>Asigna un medico para atender la emergencia</h6>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Id</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1"
+                    placeholder="Ingresa el id de la emergencia">
+                <button type="button" class="btn btn-info">Ingresar emergencia</button>
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">N° de victimas</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Descripción</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Correo electronico</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1"
+                    placeholder="Ingresa el correo electronico del medico">
+                <div class="form-text" id="basic-addon4">Correo electronico del medico que atenderá la emergencia.</div>
+            </div>
+            <button class="btn btn-info">Atender emergencia!</button>
+        </form>
+        <article class="col-lg card">
+            <h4>Emergencias atendidas: 0</h4>
+            <h4>Medicos disponibles: 0</h4>
+            <h4>Atenciones pendientes : 0</h4>
         </article>
+
     </section>
 
 </main>
