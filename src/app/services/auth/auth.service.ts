@@ -18,13 +18,13 @@ export class AuthService {
 
   registrar(data: any): Observable<any> {
 
-    return this.client.post(this.baseUrlPrueba + 'auth/registro', data)
+    return this.client.post(this.baseUrl + 'auth/registro', data)
 
   }
 
   login(data: any): Observable<any> {
 
-    return this.client.post(this.baseUrlPrueba + 'auth/login', data)
+    return this.client.post(this.baseUrl + 'auth/login', data)
 
   }
 
@@ -47,7 +47,7 @@ export class AuthService {
 
   recuperarContrasenna(email: string) {
 
-    this.client.get(this.baseUrlPrueba + `auth/user/${email}`).subscribe({
+    this.client.get(this.baseUrl + `auth/user/${email}`).subscribe({
       next: (data) => {
 
         this.usuario = data
@@ -58,7 +58,7 @@ export class AuthService {
 
         console.log("obteniendo usuario y contra nueva!")
 
-        this.client.put(this.baseUrlPrueba + `auth/user/${email}`, dataToUpdate).subscribe({
+        this.client.put(this.baseUrl + `auth/user/${email}`, dataToUpdate).subscribe({
           next: () => {
             console.log("usuario modificado!")
             const data = {
