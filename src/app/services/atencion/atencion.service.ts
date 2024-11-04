@@ -62,7 +62,7 @@ export class AtencionService {
       console.log("estado de la atencion cambiado!")
       await firstValueFrom(this._http.put(this.baseUrlProduccion + `atencion/editaremail/${id}`, { email: correo }, { headers }))
       console.log("correo de la atencion cambiado!")
-      await firstValueFrom(this._http.put(this.baseUrlProduccion + `auth/estado/${correo}`, 'No disponible', { headers }))
+      await firstValueFrom(this._http.put(this.baseUrlProduccion + `auth/estado/${correo}`, { disponibilidad: 'No disponible' }, { headers }))
       console.log("disponibilidad del medico cambiada!")
       const asunto = {
         correo: correo,
