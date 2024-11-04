@@ -56,11 +56,11 @@ export class AuthService {
         const nuevaPassword = this.generarContrasenaUnica()
         const dataToUpdate = { password: nuevaPassword }
 
-        console.log("obteniendo usuario y contra nueva!")
+        console.log("Obteniendo usuario y contraseña nueva!")
 
         this.client.put(this.baseUrlPrueba + `auth/user/${email}`, dataToUpdate).subscribe({
           next: () => {
-            console.log("usuario modificado!")
+            console.log("Usuario modificado!")
             const data = {
               "nombre": `${this.usuario.nombre} ${this.usuario.apellido}`,
               "app": "Codigo Trauma",
@@ -80,7 +80,7 @@ export class AuthService {
         })
       },
       error: (err) => {
-        this.mensajeria.presentarAlerta("No se ha ecotrado el correo!")
+        this.mensajeria.presentarAlerta("No se ha encontrado el correo!")
       }
     })
 
