@@ -61,4 +61,10 @@ export class AdminComponent implements OnInit {
     })
   }
 
+  asignarMedico() {
+
+    this._atencion.asignarAtencion(22, "atendida", "martinsantiago.se@gmail.com")
+
+  }
+
 }

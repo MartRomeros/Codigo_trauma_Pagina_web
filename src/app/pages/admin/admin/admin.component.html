@@ -53,7 +53,7 @@
 
     <section class="row">
 
-        <form class="col-lg card" [formGroup]="atencionForm">
+        <form class="col-lg card" [formGroup]="atencionForm" (ngSubmit)="asignarMedico()">
             <h5>Atender emergencia</h5>
             <h6>Asigna un medico para atender la emergencia</h6>
             <div class="mb-3 buscar-atencion">
