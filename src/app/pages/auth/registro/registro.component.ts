@@ -43,6 +43,9 @@ export class RegistroComponent {
       nombre: this.formularioRegistro.get('nombre').value
     }
 
+    localStorage.setItem('correo', JSON.stringify(data.email))
+
+
     this._authService.registrar(data).subscribe({
       next: (data: any) => {
 
@@ -50,7 +53,6 @@ export class RegistroComponent {
         this.cargando = false
         this.mensajeria.presentarAlertaSucess('usuario creado redirigiendo al inicio de sesión')
         this.router.navigate(['login'])
-
 
       },
       error: (err: any) => {

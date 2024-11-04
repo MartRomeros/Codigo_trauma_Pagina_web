@@ -79,4 +79,15 @@ export class AtencionService {
 
   }
 
+  traerAtencionByMedico(correo: string): Observable<any> {
+
+    const token = JSON.parse(localStorage.getItem('token') || '{}')
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+
+    return this._http.get(this.baseUrlProduccion + `atencion/atencionesbyemail/${correo}`,{headers})
+
+  }
+
 }

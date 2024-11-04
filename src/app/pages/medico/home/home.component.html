@@ -1,7 +1,9 @@
 <div class="form-container">
+
+
+    @if (emergencia.length === 0) {
     <h2>Actualizar Estado de Emergencia</h2>
     <p>Ingrese los detalles para actualizar el estado de la Emergencia</p>
-
     <form>
         <div class="form-group">
             <label for="idEmergencia">ID de Emergencia</label>
@@ -24,4 +26,7 @@
 
         <button type="submit" class="btn-actualizar">Actualizar Estado</button>
     </form>
+    }@else {
+        <H1>No presentas emergencias para abordar!</H1>
+    }
 </div>

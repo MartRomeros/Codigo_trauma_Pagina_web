@@ -63,7 +63,11 @@ export class AdminComponent implements OnInit {
 
   asignarMedico() {
 
-    this._atencion.asignarAtencion(28, "atendida", "martinsantiago.se@gmail.com")
+    const id = this.atencionForm.get('id')?.value
+    const correo = this.atencionForm.get('email')?.value
+
+
+    this._atencion.asignarAtencion(28, "en proceso", correo)
 
   }
 
