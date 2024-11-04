@@ -1,1 +1,27 @@
-<p>home works!</p>
+<div class="form-container">
+    <h2>Actualizar Estado de Emergencia</h2>
+    <p>Ingrese los detalles para actualizar el estado de la Emergencia</p>
+
+    <form>
+        <div class="form-group">
+            <label for="idEmergencia">ID de Emergencia</label>
+            <input type="text" id="idEmergencia" placeholder="Ingrese el id de la emerngencia">
+        </div>
+
+        <div class="form-grup">
+            <label for="nuevoEstado">Nuevo Estado</label>
+            <select id="cosito">
+                <option value="" disabled selected>Seleccione el nuevo estado</option>
+                <option value="en-preoceso">En proceso</option>
+                <option value="finalizado">Finalizado</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="descripcion">Descripción de la actualización</label>
+            <textarea id="descripcion" placeholder="Proporcione detalles de la actualizacion"></textarea>
+        </div>
+
+        <button type="submit" class="btn-actualizar">Actualizar Estado</button>
+    </form>
+</div>
