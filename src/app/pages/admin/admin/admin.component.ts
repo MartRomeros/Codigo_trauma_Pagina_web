@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AtencionService } from '../../../services/atencion/atencion.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MensajeriaService } from '../../../services/mensajeria/mensajeria.service';
 
 @Component({
   selector: 'app-admin',
@@ -13,7 +14,7 @@ export class AdminComponent implements OnInit {
   atenciones: any = []
   medicos: any = []
 
-  constructor(private _atencion: AtencionService, private fb: FormBuilder) {
+  constructor(private _atencion: AtencionService, private fb: FormBuilder, private _mensajeria: MensajeriaService) {
     this.atencionForm = fb.group({
       atencionId: ['', [Validators.required]],
       victimas: ['', [Validators.required]],
@@ -41,6 +42,12 @@ export class AdminComponent implements OnInit {
 
   traerAtencion() {
 
+    if(this.atencionForm.get('atencionId')!.errors){
+      this._mensajeria.presentarAlerta('verifica el id')
+      return
+
+    }
+
     const id = parseInt(this.atencionForm.get('atencionId')?.value)
     this._atencion.traerAtencion(id).subscribe({
       next: (data) => {
@@ -63,12 +70,32 @@ export class AdminComponent implements OnInit {
 
   asignarMedico() {
 
+    if(!this.validarCampos()){
+      return
+    }
+
     const id = this.atencionForm.get('atencionId')?.value
     const correo = this.atencionForm.get('email')?.value
 
 
-    this._atencion.asignarAtencion(id, "en proceso", correo)
+    this._atencion.asignarAtencion(id, "en progreso", correo)
+    this.traerAtenciones()
+    this.traerMedicos()
 
+  }
+
+  validarCampos(): boolean {
+
+    const campos = Object.keys(this.atencionForm.controls)
+
+    for (let index = 0; index < campos.length; index++) {
+      const campo = this.atencionForm.get(campos[index])
+      if (campo!.errors) {
+        this._mensajeria.presentarAlerta('Verifica los campos!')
+        return false
+      }
+    }
+    return true
   }
 
 }
