@@ -63,6 +63,14 @@ export class AtencionService {
       console.log("correo de la atencion cambiado!")
       await firstValueFrom(this._http.put(this.baseUrlPrueba + `auth/estado/${correo}`, 'No disponible', { headers }))
       console.log("disponibilidad del medico cambiada!")
+      const asunto = {
+        correo: correo,
+        asunto: "Atencion de una emergencia",
+        mensaje: "Se le ha solicitado atender una emergencia!"
+      }
+      await firstValueFrom(this._http.post(this.baseUrlPrueba + "mensajeria/enviaremergencia", asunto))
+      console.log("correo enviado al medico!")
+      this._mensajeria.presentarAlertaSucess('Emergencia Abordada!')
 
     } catch (error) {
       console.log(error)
