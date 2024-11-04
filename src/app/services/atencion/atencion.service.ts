@@ -10,6 +10,7 @@ import { firstValueFrom, Observable } from 'rxjs';
 export class AtencionService {
 
   baseUrlPrueba: string = 'http://localhost:3000/'
+  baseUrlProduccion: string = 'https://codigotraumabackend-production.up.railway.app/'
 
   constructor(private _mensajeria: MensajeriaService, private _http: HttpClient, private _router: Router) { }
 
@@ -21,7 +22,7 @@ export class AtencionService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     })
-    return this._http.get(this.baseUrlPrueba + 'atencion/atenciones', { headers })
+    return this._http.get(this.baseUrlProduccion + 'atencion/atenciones', { headers })
 
   }
 
@@ -34,7 +35,7 @@ export class AtencionService {
 
     const params = new HttpParams().set('number', id.toString())
 
-    return this._http.get(this.baseUrlPrueba + `atencion/atenciones/${id}`, { headers, params })
+    return this._http.get(this.baseUrlProduccion + `atencion/atenciones/${id}`, { headers, params })
 
   }
 
@@ -44,7 +45,7 @@ export class AtencionService {
       'Authorization': `Bearer ${token}`
     })
 
-    return this._http.get(this.baseUrlPrueba + 'auth/medicos')
+    return this._http.get(this.baseUrlProduccion + 'auth/medicos')
   }
 
   async asignarAtencion(id: number, estado: string, correo: string) {
@@ -57,18 +58,18 @@ export class AtencionService {
 
     try {
 
-      await firstValueFrom(this._http.put(this.baseUrlPrueba + `atencion/editarestado/${id}`, data, { headers }))
+      await firstValueFrom(this._http.put(this.baseUrlProduccion + `atencion/editarestado/${id}`, data, { headers }))
       console.log("estado de la atencion cambiado!")
-      await firstValueFrom(this._http.put(this.baseUrlPrueba + `atencion/editaremail/${id}`, correo, { headers }))
+      await firstValueFrom(this._http.put(this.baseUrlProduccion + `atencion/editaremail/${id}`, correo, { headers }))
       console.log("correo de la atencion cambiado!")
-      await firstValueFrom(this._http.put(this.baseUrlPrueba + `auth/estado/${correo}`, 'No disponible', { headers }))
+      await firstValueFrom(this._http.put(this.baseUrlProduccion + `auth/estado/${correo}`, 'No disponible', { headers }))
       console.log("disponibilidad del medico cambiada!")
       const asunto = {
         correo: correo,
         asunto: "Atencion de una emergencia",
         mensaje: "Se le ha solicitado atender una emergencia!"
       }
-      await firstValueFrom(this._http.post(this.baseUrlPrueba + "mensajeria/enviaremergencia", asunto))
+      await firstValueFrom(this._http.post(this.baseUrlProduccion + "mensajeria/enviaremergencia", asunto))
       console.log("correo enviado al medico!")
       this._mensajeria.presentarAlertaSucess('Emergencia Abordada!')
 
