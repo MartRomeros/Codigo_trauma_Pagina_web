@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 export class AtencionService {
 
   baseUrlPrueba: string = 'http://localhost:3000/atencion/'
+  baseUrlPruebaAuth: string = 'http://localhost:3000/auth/'
 
   constructor(private _mensajeria: MensajeriaService, private _http: HttpClient, private _router: Router) { }
 
@@ -38,6 +39,16 @@ export class AtencionService {
 
     return this._http.get(this.baseUrlPrueba + `atenciones/${id}`, { headers, params })
 
+  }
+
+  traerMedicos():Observable<any>{
+    const token = JSON.parse(localStorage.getItem('token') || '{}')
+    console.log(token)
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+
+    return this._http.get(this.baseUrlPruebaAuth+'medicos')
   }
 
 }

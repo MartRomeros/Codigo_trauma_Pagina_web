@@ -11,6 +11,7 @@ export class AdminComponent implements OnInit {
 
   atencionForm!: FormGroup
   atenciones: any = []
+  medicos: any = []
 
   constructor(private _atencion: AtencionService, private fb: FormBuilder) {
     this.atencionForm = fb.group({
@@ -23,6 +24,7 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.traerAtenciones()
+    this.traerMedicos()
   }
 
   traerAtenciones() {
@@ -47,6 +49,14 @@ export class AdminComponent implements OnInit {
       },
       error: (err) => {
         console.log(err)
+      }
+    })
+  }
+
+  traerMedicos() {
+    this._atencion.traerMedicos().subscribe({
+      next: (data) => {
+        this.medicos = data.medicos
       }
     })
   }
