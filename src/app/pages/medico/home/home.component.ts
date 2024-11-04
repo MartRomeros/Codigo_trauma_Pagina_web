@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AtencionService } from '../../../services/atencion/atencion.service';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-medico-home',
@@ -10,11 +11,13 @@ export class HomeMedicComponent implements OnInit {
 
   emergencia: any[] = []
 
+  constructor(private _atencion: AtencionService , private _fb:FormBuilder) {
+    
+  }
+
   ngOnInit(): void {
     this.traerEmergencia()
   }
-
-  constructor(private _atencion: AtencionService) { }
 
 
 
