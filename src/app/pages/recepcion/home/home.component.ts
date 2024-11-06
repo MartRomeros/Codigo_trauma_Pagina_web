@@ -55,7 +55,7 @@ export class HomeComponent implements OnInit {
       next: (data) => {
         this.mensajeria.presentarAlertaSucess(data.message)
         this._emergencia.traerEmergencias().subscribe({
-          next: (data) => {
+          next: (data:any) => {
             this.emergencias = data
             console.log(this.emergencias)
           }

@@ -5,12 +5,20 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
 export class EmergenciasService {
 
   baseUrlPruebas = 'http://localhost:3000/emergencia'
   baseUrlProduccion = 'https://codigotraumabackend-production.up.railway.app/emergencia'
 
+  private emergencias: any[] = []
+
   constructor(private http: HttpClient) { }
+
+  //GETTER Y SETTER
+  getEmergencias() {
+    return this.emergencias
+  }
 
 
 
@@ -25,6 +33,7 @@ export class EmergenciasService {
     })
 
     return this.http.get(this.baseUrlProduccion + '/emergencias', { headers })
+
   }
 
   crearEmergencia(data: any): Observable<any> {

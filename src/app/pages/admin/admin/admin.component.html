@@ -2,7 +2,8 @@
     <h1>Panel de administrador</h1>
     <section class="row">
         <article class="col-lg card">
-            <h4>Historial de Atenciones</h4>
+            <h4>Historial de Atenciones <a routerLink="['/admin',{ refresh: new Date().getTime()}]"
+                    class="btn btn-info">Refrescar</a></h4>
             <h6 class="card-subtitle">Emergencias registradas</h6>
             <div class="table-container">
                 <table class="table">
@@ -26,7 +27,8 @@
             </div>
         </article>
         <article class="col-lg card">
-            <h4>Personal del hospital</h4>
+            <h4>Personal del hospital <a routerLink="['/admin',{ refresh: new Date().getTime()}]"
+                    class="btn btn-info">Refrescar</a></h4>
             <h6 class="card-subtitle">Personal del hospital y su estado de disponibilidad</h6>
             <div class="table-container">
                 <table class="table">
