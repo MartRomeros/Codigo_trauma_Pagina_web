@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth/auth.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MensajeriaService } from '../../../services/mensajeria/mensajeria.service';
 import { Router } from '@angular/router';
 
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 
 export class LoginComponent implements OnInit {
 
-  loginForm?: any
+  loginForm!: FormGroup
   cargando?: boolean
   tipoUsuario?: string
 
@@ -36,7 +36,6 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['login'])
     }
 
-    this._auth.verificarTipoUsuario(JSON.parse(localStorage.getItem('usuario') || '[]'))
 
     this.cargando = false
 
@@ -45,53 +44,17 @@ export class LoginComponent implements OnInit {
 
 
   login() {
+    const data: any = {
+      email: this.loginForm.get('correo')?.value,
+      password: this.loginForm.get('password')?.value
+    }
     this.cargando = true
-    if (!this.validarCampos()) {
-      return
-    }
-
+    this._auth.login(data)
     this.cargando = false
-
-    const data = {
-
-      email: this.loginForm.get('correo').value,
-      password: this.loginForm.get('password').value,
-
-    }
-
-    this._auth.login(data).subscribe({
-      next: (data) => {
-        this.tipoUsuario = data.user.cargo
-        localStorage.setItem('token', JSON.stringify(data.token))
-        localStorage.setItem('usuario', JSON.stringify(data.user.cargo))
-        this.cargando = false
-        this._auth.verificarTipoUsuario(this.tipoUsuario!)
-      },
-      error: (err: any) => {
-        this.mensajeria.presentarAlerta(err.error.message)
-        this.cargando = false
-      }
-    })
-
   }
 
-  validarCampo(nombre: string): boolean {
-    return this.loginForm.get(nombre).errors && this.loginForm.get(nombre).touched
-  }
-
-  validarCampos(): boolean {
-
-    const campos = Object.keys(this.loginForm.controls)
-
-    for (let index = 0; index < campos.length; index++) {
-      const campo = this.loginForm.get(campos[index])
-      if (campo.errors) {
-        this.cargando = false
-        this.mensajeria.presentarAlerta('Verifica los campos!')
-        return false
-      }
-    }
-    return true
+  validarCampo(nombre: string) {
+    return this._auth.validarCampo(this.loginForm, nombre)
   }
 
 

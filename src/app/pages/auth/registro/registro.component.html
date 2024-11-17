@@ -1,50 +1,66 @@
-@if(cargando){
-<mat-progress-bar mode="indeterminate"></mat-progress-bar>
-}
-
 <main class="container-fluid">
     <section class="row">
-        <form class="col-md-6" [formGroup]="formularioRegistro" (ngSubmit)="registrar()">
+        <form class="col-md-6" [formGroup]="formularioRegistro" (ngSubmit)="register()">
             <fieldset>
                 <h5>Registro de usuario <i class="bi bi-person-fill-add"></i></h5>
                 <h6>Completa los campos para crear tu perfil de usuario</h6>
             </fieldset>
             <div class="mb-3">
-                <label for="name" class="form-label">Nombre</label>
+                <label for="name" class="form-label">Nombre <span class="asteristc"><i
+                            class="bi bi-asterisk"></i></span></label>
                 <input type="text" class="form-control" id="name" formControlName="nombre"
                     placeholder="Ingresa tu nombre">
-                @if (validarCampo('nombre')) {<div id="emailHelp" class="text-danger">Nombre Invalido</div>}
+                <div class="text-danger">{{validarCampo('nombre')}}</div>
             </div>
             <div class="mb-3">
-                <label for="last-name" class="form-label">Apellido</label>
+                <label for="last-name" class="form-label">Apellido <span class="asteristc"><i
+                            class="bi bi-asterisk"></i></span></label>
                 <input type="text" class="form-control" id="last-name" formControlName="apellido"
                     placeholder="Ingresa tu apellido">
-                @if (validarCampo('apellido')) {<div id="emailHelp" class="text-danger">Apellido Invalido</div>}
+                <div class="text-danger">{{validarCampo('apellido')}}</div>
             </div>
             <div class="mb-3">
-                <label for="email" class="form-label">Correo electronico</label>
+                <label for="email" class="form-label">Correo electronico <span class="asteristc"><i
+                            class="bi bi-asterisk"></i></span></label>
                 <input type="email" class="form-control" id="email" formControlName="correo"
                     placeholder="Ingresa tu correo electronico">
-                @if (validarCampo('correo')) {<div id="emailHelp" class="text-danger">Correo Invalido</div>}
+                <div class="text-danger">{{validarCampo('correo')}}</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="fono" class="form-label">Numero Telefonico <span class="asteristc"><i
+                            class="bi bi-asterisk"></i></span></label>
+                <input type="number" class="form-control" id="fono" formControlName="fono"
+                    placeholder="Ingresa tu numero de telefono">
+                <div class="text-danger">{{validarCampo('fono')}}</div>
             </div>
             <div class="mb-3">
-                <label for="cargo" class="form-label">Cargo en el hospital</label>
+                <label for="cargo" class="form-label">Cargo en el hospital <span class="asteristc"><i
+                            class="bi bi-asterisk"></i></span></label>
                 <select class="form-select" id="cargo" formControlName="cargo">
-                    <option value="medico">Personal Clinico</option>
-                    <option value="recepcionista">Recepcionista</option>
-                    <option value="administrador">Administrador</option>
+                    <ng-container *ngFor="let item of cargos">
+                        <option [value]="item.id">{{item.descripcion}}</option>
+                    </ng-container>
                 </select>
-                @if (validarCampo('cargo')) {<div id="emailHelp" class="text-danger">Cargo Invalido</div>}
+                <div class="text-danger">{{validarCampo('cargo')}}</div>
             </div>
             <div class="mb-3">
-                <label for="password" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="password" formControlName="password" placeholder="Ingresa tu contraseña">
-                @if (validarCampo('password')) {<div id="emailHelp" class="text-danger">Contraseña Invalida!</div>}
+                <label for="password" class="form-label">Contraseña <span class="asteristc"><i
+                            class="bi bi-asterisk"></i></span></label>
+                <input type="password" class="form-control" id="password" formControlName="password"
+                    placeholder="Ingresa tu contraseña">
+                <div class="text-danger">{{validarCampo('password')}}</div>
             </div>
             <fieldset class="login-options">
                 <a routerLink="/login">Ya tengo una cuenta</a>
             </fieldset>
+            @if (cargando) {
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            }@else {
             <button type="submit" class="btn btn-info">Registrarme</button>
+            }
         </form>
     </section>
 </main>

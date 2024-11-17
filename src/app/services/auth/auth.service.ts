@@ -1,94 +1,85 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, UnsubscriptionError } from 'rxjs';
+import { firstValueFrom, lastValueFrom, Observable } from 'rxjs';
 import { MensajeriaService } from '../mensajeria/mensajeria.service';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  baseUrl: string = 'https://codigotraumabackend-production.up.railway.app/'
   baseUrlPrueba: string = 'http://localhost:3000/'
   baseForgotPassword: string = 'https://myths.cl/api/reset_password.php'
   usuario: any
 
   constructor(private client: HttpClient, private router: Router, private mensajeria: MensajeriaService) { }
 
-  registrar(data: any): Observable<any> {
+  validarCampo(formulario: FormGroup, nombre: string): string {
+    if (formulario.get(nombre)?.hasError('required') && formulario.get(nombre)?.touched) {
+      return 'Campo requerido!'
 
-    return this.client.post(this.baseUrl + 'auth/registro', data)
+    } else if (formulario.get(nombre)?.hasError('email') && formulario.get(nombre)?.touched) {
+      return 'Formato invalido!'
 
-  }
-
-  login(data: any): Observable<any> {
-
-    return this.client.post(this.baseUrl + 'auth/login', data)
-
-  }
-
-  verificarTipoUsuario(tipoUsuario: string) {
-
-    switch (tipoUsuario) {
-      case 'recepcionista':
-        this.router.navigate(['recepcion'])
-        break;
-      case 'administrador':
-        this.router.navigate(['admin'])
-        break;
-      case 'medico':
-        this.router.navigate(['medico'])
-        break;
-
-      default:
-        break;
+    } else {
+      return ''
     }
 
   }
 
+  async registrar(data: any) {
 
-  recuperarContrasenna(email: string) {
+    try {
 
-    this.client.get(this.baseUrl + `auth/user/${email}`).subscribe({
-      next: (data) => {
+      const response1: any = await lastValueFrom(this.client.post(`${this.baseUrlPrueba}personal/registro`, data))
+      console.log(response1)
+      this.mensajeria.presentarAlertaSucess(response1.message)
+      this.router.navigate(['login'])
 
-        this.usuario = data
-        this.usuario = this.usuario.user
+    } catch (error: any) {
 
-        const nuevaPassword = this.generarContrasenaUnica()
-        const dataToUpdate = { password: nuevaPassword }
+      this.mensajeria.presentarAlerta(error.error.message)
+      console.log(error)
 
-        console.log("Obteniendo usuario y contraseña nueva!")
-
-        this.client.put(this.baseUrl + `auth/user/${email}`, dataToUpdate).subscribe({
-          next: () => {
-            console.log("Usuario modificado!")
-            const data = {
-              "nombre": `${this.usuario.nombre} ${this.usuario.apellido}`,
-              "app": "Codigo Trauma",
-              "clave": nuevaPassword,
-              "email": this.usuario.email
-            }
-            this.client.post(this.baseForgotPassword, data).subscribe({
-              next: (data) => {
-                this.mensajeria.presentarAlertaSucess('Se ha enviado un correo con tu nueva credencial!')
-                this.router.navigate(['login'])
-              },
-              error: (err) => {
-                console.log(err)
-              }
-            })
-          }
-        })
-      },
-      error: (err) => {
-        this.mensajeria.presentarAlerta("No se ha encontrado el correo!")
-      }
-    })
+    }
 
   }
 
+  async login(data: any) {
+
+    try {
+
+      const response: any = await lastValueFrom(this.client.post(`${this.baseUrlPrueba}personal/login`, data))
+      
+      switch (response.user.cargo) {
+        case 1:
+          this.router.navigate(['medico'])
+          break;
+        case 2:
+          this.router.navigate(['recepcion'])
+          break;
+        case 3:
+          this.router.navigate(['admin'])
+          break;
+
+        default:
+          break;
+      }
+
+    } catch (error: any) {
+
+      console.log(error)
+
+    }
+
+  }
+
+  logout() {
+    localStorage.clear()
+    this.router.navigate(['login'])
+  }
 
   generarContrasenaUnica(longitud: number = 10): string {
     const caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -109,11 +100,6 @@ export class AuthService {
     }
 
     return contrasena;
-  }
-
-  logout() {
-    localStorage.clear()
-    this.router.navigate(['login'])
   }
 
 

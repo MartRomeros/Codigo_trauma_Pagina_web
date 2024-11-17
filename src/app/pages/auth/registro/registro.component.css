@@ -12,26 +12,30 @@ form {
     padding: 2vh;
 }
 
-fieldset > h5,
-fieldset > h6{
+fieldset>h5,
+fieldset>h6 {
     text-align: center;
 }
 
-.login-options{
+.login-options {
     display: flex;
     justify-content: space-between;
 }
 
-.login-options > a{
-    /* text-decoration: none; */
+.login-options>a {
     color: black;
     padding: 2vh;
 }
 
-.form-control,.form-select{
+.form-control,
+.form-select {
     border: 1px cyan solid;
 }
 
-form > button{
+form>button {
     color: white;
+}
+
+.asteristc{
+    color: red;
 }

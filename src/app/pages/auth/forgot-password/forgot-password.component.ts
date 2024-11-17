@@ -26,7 +26,6 @@ export class ForgotPasswordComponent {
     }
 
     const correo = this.forgotForm.get('correo')?.value
-    this.auth.recuperarContrasenna(correo)
 
   }
 

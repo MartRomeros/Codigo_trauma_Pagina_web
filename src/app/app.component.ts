@@ -33,7 +33,6 @@ export class AppComponent implements OnInit {
       this.router.navigate(['login'])
     }
 
-    this.auth.verificarTipoUsuario(this.usuario)
 
   }
 

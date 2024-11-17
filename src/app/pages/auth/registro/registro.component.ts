@@ -1,21 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { MensajeriaService } from '../../../services/mensajeria/mensajeria.service';
+import { HttpClient } from '@angular/common/http';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.css']
 })
-export class RegistroComponent {
+export class RegistroComponent implements OnInit {
 
-  cargando: boolean = false
-  formularioRegistro?: FormGroup | any
+  cargando?: boolean
+  formularioRegistro!: FormGroup
+  cargos?: any[]
 
 
-  constructor(private fb: FormBuilder, private _authService: AuthService, private router: Router, private mensajeria: MensajeriaService) {
+  constructor(
+    private fb: FormBuilder,
+    private _authService: AuthService,
+    private router: Router,
+    private mensajeria: MensajeriaService,
+    private _http: HttpClient
+  ) {
 
     this.formularioRegistro = fb.group({
       nombre: ['', Validators.required],
@@ -23,66 +32,37 @@ export class RegistroComponent {
       correo: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
       cargo: ['', [Validators.required]],
+      fono: ['', [Validators.required]],
     })
 
   }
 
+  async ngOnInit() {
+    const data: any = await lastValueFrom(this._http.get('http://localhost:3000/cargo/all_cargos'))
+    this.cargos = data.cargos
+  }
 
-  registrar() {
+  register() {
+    setTimeout(() => {
+      this.cargando = false
+
+      const data = {
+        nombre: this.formularioRegistro.get('nombre')?.value,
+        apellido: this.formularioRegistro.get('apellido')?.value,
+        fono: parseInt(this.formularioRegistro.get('fono')?.value),
+        email: this.formularioRegistro.get('correo')?.value,
+        password: this.formularioRegistro.get('password')?.value,
+        cargo: parseInt(this.formularioRegistro.get('cargo')?.value)
+      }
+
+      this._authService.registrar(data)
+
+    }, 2000);
     this.cargando = true
-
-    if (!this.validarCampos()) {
-      return
-    }
-
-    const data = {
-      email: this.formularioRegistro.get('correo').value,
-      password: this.formularioRegistro.get('password').value,
-      apellido: this.formularioRegistro.get('apellido').value,
-      cargo: this.formularioRegistro.get('cargo').value,
-      nombre: this.formularioRegistro.get('nombre').value
-    }
-
-    localStorage.setItem('correo', JSON.stringify(data.email))
-
-
-    this._authService.registrar(data).subscribe({
-      next: (data: any) => {
-
-        console.log(data)
-        this.cargando = false
-        this.mensajeria.presentarAlertaSucess('usuario creado redirigiendo al inicio de sesión')
-        this.router.navigate(['login'])
-
-      },
-      error: (err: any) => {
-        this.mensajeria.presentarAlerta(err.error.message)
-        this.cargando = false
-      }
-
-    })
-
-    this.cargando = false
-
   }
 
-  validarCampo(nombre: string): boolean {
-    return this.formularioRegistro.get(nombre).errors && this.formularioRegistro.get(nombre).touched
-  }
-
-  validarCampos(): boolean {
-
-    const campos = Object.keys(this.formularioRegistro.controls)
-
-    for (let index = 0; index < campos.length; index++) {
-      const campo = this.formularioRegistro.get(campos[index])
-      if (campo.errors) {
-        this.cargando = false
-        this.mensajeria.presentarAlerta('Verifica los campos!')
-        return false
-      }
-    }
-    return true
+  validarCampo(nombre: string): string {
+    return this._authService.validarCampo(this.formularioRegistro, nombre)
   }
 
 }
