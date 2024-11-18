@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
     this.traerEmergencias()
   }
 
-  AgregarEmergencia() {
+  async AgregarEmergencia() {
 
     this.descripcion = this.recepcionForm.get('descripcion')?.value
     this.victimas = this.recepcionForm.get('cantidadVictimas')?.value
@@ -59,36 +59,33 @@ export class HomeComponent implements OnInit {
       fecha: this.fecha
     }
 
-    this._emergencia.crearEmergencia(data).subscribe({
-      next: (data) => {
-        this._emergencia.traerEmergencias().subscribe({
-          next: (data) => {
-            this.emergencias = data.emergencias
-          }
-        })
-      }
-    })
+    try {
+
+      await lastValueFrom(this._emergencia.crearEmergencia(data))
+      const response: any = await lastValueFrom(this._emergencia.traerEmergencias())
+      this.emergencias = response.emergencias
+
+    } catch (error) {
+
+      console.log(error)
+
+    }
+
 
   }
 
-  traerEmergencias() {
+  async traerEmergencias() {
 
-    this._emergencia.traerEmergencias().subscribe({
+    try {
 
-      next: (data: any) => {
+      const response: any = await lastValueFrom(this._emergencia.traerEmergencias())
+      this.emergencias = response.emergencias
 
-        this.emergencias = data.emergencias
-        console.log(this.emergencias)
+    } catch (error: any) {
 
-      },
+      console.log(error)
 
-      error(err) {
-
-        console.log(err)
-
-      }
-
-    })
+    }
 
   }
 
