@@ -3,6 +3,8 @@ import { EmergenciasService } from '../../../services/emergencia/emergencias.ser
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MensajeriaService } from '../../../services/mensajeria/mensajeria.service';
 import { AuthService } from '../../../services/auth/auth.service';
+import { HttpClient } from '@angular/common/http';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-recepcion-home',
@@ -12,13 +14,19 @@ import { AuthService } from '../../../services/auth/auth.service';
 export class HomeComponent implements OnInit {
 
   recepcionForm!: FormGroup
-  emergencias: any = [];
+  emergencias?: any[] = []
   descripcion?: string;
   victimas?: number
   fechaActual: Date = new Date()
   fecha: string = this.fechaActual.getDate() + '/' + (this.fechaActual.getMonth() + 1) + '/' + this.fechaActual.getFullYear()
 
-  constructor(private _emergencia: EmergenciasService, private fb: FormBuilder, private mensajeria: MensajeriaService, private _auth: AuthService) {
+  constructor(
+    private _emergencia: EmergenciasService,
+    private fb: FormBuilder,
+    private mensajeria: MensajeriaService,
+    private _auth: AuthService,
+    private _http: HttpClient
+  ) {
     this.recepcionForm = fb.group({
       cantidadVictimas: ['', [Validators.required]],
       descripcion: ['', [Validators.required]],
@@ -26,7 +34,8 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.cargarEmergencias();
+    this._auth.verificarToken()
+    this.traerEmergencias()
   }
 
   AgregarEmergencia() {
@@ -44,7 +53,6 @@ export class HomeComponent implements OnInit {
       return;
     }
 
-
     const data = {
       descripcion: this.descripcion,
       victimas: this.victimas,
@@ -53,30 +61,33 @@ export class HomeComponent implements OnInit {
 
     this._emergencia.crearEmergencia(data).subscribe({
       next: (data) => {
-        this.mensajeria.presentarAlertaSucess(data.message)
         this._emergencia.traerEmergencias().subscribe({
-          next: (data:any) => {
-            this.emergencias = data
-            console.log(this.emergencias)
+          next: (data) => {
+            this.emergencias = data.emergencias
           }
         })
       }
     })
 
-
   }
 
-  private cargarEmergencias() {
+  traerEmergencias() {
 
     this._emergencia.traerEmergencias().subscribe({
-      next: (data) => {
-        this.emergencias = data
+
+      next: (data: any) => {
+
+        this.emergencias = data.emergencias
+        console.log(this.emergencias)
+
       },
-      error: (err) => {
-        this.mensajeria.presentarAlerta('error en la autenticacion, deberas iniciar sesion otra vez!')
-        this._auth.logout()
+
+      error(err) {
+
+        console.log(err)
 
       }
+
     })
 
   }

@@ -25,15 +25,7 @@ export class AppComponent implements OnInit {
   constructor(private router: Router, private auth: AuthService) { }
 
   ngOnInit(): void {
-    if (this.userToken === 'null') {
-      this.router.navigate(['login'])
-    }
-
-    if (this.usuario === 'null') {
-      this.router.navigate(['login'])
-    }
-
-
+    this.verificarToken()
   }
 
   logout() {

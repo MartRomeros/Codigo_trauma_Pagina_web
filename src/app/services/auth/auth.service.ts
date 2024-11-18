@@ -52,7 +52,9 @@ export class AuthService {
     try {
 
       const response: any = await lastValueFrom(this.client.post(`${this.baseUrlPrueba}personal/login`, data))
-      
+      localStorage.setItem('usuario', JSON.stringify(response.user))
+      localStorage.setItem('token', JSON.stringify(response.token))
+
       switch (response.user.cargo) {
         case 1:
           this.router.navigate(['medico'])
@@ -70,10 +72,18 @@ export class AuthService {
 
     } catch (error: any) {
 
-      console.log(error)
+      this.mensajeria.presentarAlerta(error.error.message)
 
     }
 
+  }
+
+  verificarToken() {
+    if (!localStorage.getItem('token')) {
+      this.mensajeria.presentarAlerta('Ha ocurrido un problema!, volveras al inicio de sesión')
+      this.logout()
+      this.router.navigate(['login'])
+    }
   }
 
   logout() {
