@@ -45,7 +45,7 @@ export class AtencionService {
       'Authorization': `Bearer ${token}`
     })
 
-    return this._http.get(this.baseUrlProduccion + 'auth/medicos')
+    return this._http.get(`${this.baseUrlPrueba}personal/medicos`, { headers })
   }
 
   async asignarAtencion(id: number, estado: string, correo: string) {

@@ -2,8 +2,7 @@
     <h1>Panel de administrador</h1>
     <section class="row">
         <article class="col-lg card">
-            <h4>Historial de Atenciones <a routerLink="['/admin',{ refresh: new Date().getTime()}]"
-                    class="btn btn-info">Refrescar</a></h4>
+            <h4>Historial de Atenciones <button class="btn btn-info" (click)="refrescarPage()">Refrescar</button></h4>
             <h6 class="card-subtitle">Emergencias registradas</h6>
             <div class="table-container">
                 <table class="table">
@@ -27,8 +26,7 @@
             </div>
         </article>
         <article class="col-lg card">
-            <h4>Personal del hospital <a routerLink="['/admin',{ refresh: new Date().getTime()}]"
-                    class="btn btn-info">Refrescar</a></h4>
+            <h4>Personal del hospital <button class="btn btn-info" (click)="refrescarPage()">Refrescar</button></h4>
             <h6 class="card-subtitle">Personal del hospital y su estado de disponibilidad</h6>
             <div class="table-container">
                 <table class="table">
@@ -37,7 +35,6 @@
                             <th>Correo</th>
                             <th>Nombre</th>
                             <th>Apellido</th>
-                            <th>Estado</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -45,7 +42,6 @@
                             <th>{{item.email}}</th>
                             <th>{{item.nombre}}</th>
                             <th>{{item.apellido}}</th>
-                            <th>{{item.disponibilidad}}</th>
                         </tr>
                     </tbody>
                 </table>

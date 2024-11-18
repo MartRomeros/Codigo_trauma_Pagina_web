@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AtencionService } from '../../../services/atencion/atencion.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MensajeriaService } from '../../../services/mensajeria/mensajeria.service';
+import { Router } from '@angular/router';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-admin',
@@ -14,7 +16,7 @@ export class AdminComponent implements OnInit {
   atenciones: any = []
   medicos: any = []
 
-  constructor(private _atencion: AtencionService, private fb: FormBuilder, private _mensajeria: MensajeriaService) {
+  constructor(private _atencion: AtencionService, private fb: FormBuilder, private _mensajeria: MensajeriaService, private _router: Router) {
     this.atencionForm = fb.group({
       atencionId: ['', [Validators.required]],
       victimas: ['', [Validators.required]],
@@ -42,7 +44,7 @@ export class AdminComponent implements OnInit {
 
   traerAtencion() {
 
-    if(this.atencionForm.get('atencionId')!.errors){
+    if (this.atencionForm.get('atencionId')!.errors) {
       this._mensajeria.presentarAlerta('verifica el id')
       return
 
@@ -60,17 +62,15 @@ export class AdminComponent implements OnInit {
     })
   }
 
-  traerMedicos() {
-    this._atencion.traerMedicos().subscribe({
-      next: (data) => {
-        this.medicos = data.medicos
-      }
-    })
+  async traerMedicos() {
+    const response: any = await lastValueFrom(this._atencion.traerMedicos())
+    console.log(response.medicos)
+    this.medicos = response.medicos
   }
 
   asignarMedico() {
 
-    if(!this.validarCampos()){
+    if (!this.validarCampos()) {
       return
     }
 
@@ -96,6 +96,12 @@ export class AdminComponent implements OnInit {
       }
     }
     return true
+  }
+
+  refrescarPage() {
+    this._router.navigateByUrl('/admin', { skipLocationChange: true }).then(() => {
+      this._router.navigate(['/admin'])
+    })
   }
 
 }
