@@ -30,16 +30,17 @@ export class AdminComponent implements OnInit {
     this.traerMedicos()
   }
 
-  traerAtenciones() {
-    this._atencion.traerAtenciones().subscribe({
-      next: (data) => {
-        this.atenciones = data.atenciones
-        console.log(data)
-      },
-      error: (err) => {
-        console.log(err)
-      }
-    })
+  async traerAtenciones() {
+
+    try {
+
+      const response: any = await lastValueFrom(this._atencion.traerAtenciones())
+      console.log(response)
+
+    } catch (error: any) {
+      console.log(error)
+    }
+
   }
 
   traerAtencion() {

@@ -22,7 +22,7 @@ export class AtencionService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     })
-    return this._http.get(this.baseUrlProduccion + 'atencion/atenciones', { headers })
+    return this._http.get(this.baseUrlPrueba + 'atencion/atenciones', { headers })
 
   }
 
