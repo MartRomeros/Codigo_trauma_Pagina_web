@@ -35,7 +35,7 @@ export class AtencionService {
 
     const params = new HttpParams().set('number', id.toString())
 
-    return this._http.get(this.baseUrlProduccion + `atencion/atenciones/${id}`, { headers, params })
+    return this._http.get(this.baseUrlPrueba + `atencion/atenciones/${id}`, { headers, params })
 
   }
 

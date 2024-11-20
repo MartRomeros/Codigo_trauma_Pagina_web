@@ -8,18 +8,19 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Id</th>
+                            <th>Descripcion</th>
                             <th>N° Victimas</th>
-                            <th>Fecha</th>
                             <th>Estado</th>
+                            <th>Opciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let item of atenciones">
-                            <th>{{item.id}}</th>
+                            <th><button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                                    (click)="mostrarDetallesAtencion(item.id)">Descripcion</button></th>
                             <th>{{item.victimas}}</th>
-                            <th>{{item.fecha}}</th>
                             <th>{{item.estado}}</th>
+                            <th><button class="btn btn-info" (click)="traerAtencion(item.id)">Atender</button></th>
                         </tr>
                     </tbody>
                 </table>
@@ -35,14 +36,12 @@
                         <tr>
                             <th>Correo</th>
                             <th>Disponibilidad</th>
-                            <th>Opciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let item of medicos">
                             <th>{{item.email}}</th>
                             <th>{{item.disponibilidad}}</th>
-                            <th><button class="btn btn-info">Atender</button></th>
                         </tr>
                     </tbody>
                 </table>
@@ -55,19 +54,12 @@
         <form class="col-lg card" [formGroup]="atencionForm" (ngSubmit)="asignarMedico()">
             <h5>Atender emergencia</h5>
             <h6>Asigna una emergencia para abordarla</h6>
-            <div class="mb-3 buscar-atencion">
-                <label for="atencionId" class="form-label">Id</label>
-                <input type="number" class="form-control" id="atencionId" placeholder="Ingresa el id de la emergencia"
-                    formControlName="atencionId">
-                <button type="button" class="btn btn-info" (click)="traerAtencion()">Ingresar emergencia</button>
-            </div>
             <div class="mb-3">
-                <label for="victimas" class="form-label">N° de victimas</label>
-                <input type="text" class="form-control" id="victimas" formControlName="victimas">
-            </div>
-            <div class="mb-3">
-                <label for="descripcion" class="form-label">Descripción</label>
-                <textarea class="form-control" id="descripcion" rows="3" formControlName="descripcion"></textarea>
+                N° de atencion: <span id="id-form-atencion"></span> <br>
+                Descripcion: <span id="descripcion-form-atencion"></span> <br>
+                N° de victimas: <span id="victimas-form-atencion"></span> <br>
+                Fecha de creacion: <span id="fecha-form-atencion"></span><br>
+                Medico encargado: <span id="medico-form-atencion"></span><br>
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Correo electronico</label>
@@ -80,3 +72,26 @@
     </section>
 
 </main>
+
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Detalles De La Emergencia</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                N° de atencion: <span id="id-atencion"></span> <br>
+                Descripcion: <span id="descripcion-atencion"></span> <br>
+                N° de victimas: <span id="victimas-atencion"></span> <br>
+                Fecha de creacion: <span id="fecha-atencion"></span><br>
+                Medico encargado: <span id="medico-atencion"></span><br>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Entendido!</button>
+            </div>
+        </div>
+    </div>
+</div>

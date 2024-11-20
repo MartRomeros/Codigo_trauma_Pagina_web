@@ -16,6 +16,18 @@ export class AuthService {
 
   constructor(private client: HttpClient, private router: Router, private mensajeria: MensajeriaService) { }
 
+  validarCampos(formulario: FormGroup): boolean {
+    const campos = Object.keys(formulario.controls)
+    for (let i = 0; i < campos.length; i++) {
+      const campo = formulario.get(campos[i])
+      if (campo?.errors) {
+        this.mensajeria.presentarAlerta(`el campo ${campos[i]} presenta un error`)
+        return false
+      }
+    }
+    return true;
+  }
+
   validarCampo(formulario: FormGroup, nombre: string): string {
     if (formulario.get(nombre)?.hasError('required') && formulario.get(nombre)?.touched) {
       return 'Campo requerido!'
