@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MensajeriaService } from '../../../services/mensajeria/mensajeria.service';
 import { AuthService } from '../../../services/auth/auth.service';
+import { lastValueFrom } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-forgot-password',
@@ -10,27 +12,51 @@ import { AuthService } from '../../../services/auth/auth.service';
 })
 export class ForgotPasswordComponent {
 
-  forgotForm!: FormGroup
+  public forgotForm!: FormGroup
 
-  constructor(private fb: FormBuilder, private mensajeria: MensajeriaService, private auth: AuthService) {
+  private _auth = inject(AuthService)
+  private _mensajeria = inject(MensajeriaService)
+  private _router = inject(Router)
+
+  constructor(private fb: FormBuilder) {
     this.forgotForm = fb.group({
-      correo: ['', [Validators.required, Validators.email]]
+      email: ['', [Validators.required, Validators.email]]
     })
   }
 
-  recuperarCredencial() {
+  async recuperarCredencial() {
+    try {
+      const correo = this.forgotForm.get('email')?.value
 
-    if (this.forgotForm.get('correo')?.errors) {
-      this.mensajeria.presentarAlerta('Verifica tu correo!')
-      return
+      const user: any = await lastValueFrom(this._auth.traerPersonalByEmail(correo))
+      console.log(user)
+
+      const password = this._auth.generarContrasenaUnica()
+      const data = { password: password }
+
+      const response1 = await lastValueFrom(this._auth.actualizarPassword(correo, data))
+      this._mensajeria.presentarAlertaSucess(response1.message)
+
+      const dataToNotificar = {
+        nombre: `${user.nombre} ${user.apellido}`,
+        app: 'Codigo Trauma',
+        clave: password,
+        email: correo
+      }
+      await lastValueFrom(this._auth.notificarUsuario(dataToNotificar))
+      this._router.navigate(['login'])
+
+
+      //await lastValueFrom(this._auth.notificarUsuario(correo))
+
+
+    } catch (error: any) {
+      console.log(error)
     }
-
-    const correo = this.forgotForm.get('correo')?.value
-
   }
 
-  validarCampo(nombre: string): boolean | null {
-    return this.forgotForm.get(nombre)!.errors && this.forgotForm.get(nombre)!.touched
+  validarCampo(nombre: string): string {
+    return this._auth.validarCampo(this.forgotForm, nombre)
   }
 
 }

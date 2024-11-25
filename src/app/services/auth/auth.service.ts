@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { firstValueFrom, lastValueFrom, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { MensajeriaService } from '../mensajeria/mensajeria.service';
 import { FormGroup } from '@angular/forms';
 
@@ -10,9 +10,10 @@ import { FormGroup } from '@angular/forms';
 })
 export class AuthService {
 
-  baseUrlPrueba: string = 'http://localhost:3000/'
-  baseForgotPassword: string = 'https://myths.cl/api/reset_password.php'
-  usuario: any
+  private urlLocal: string = 'http://localhost:3000'
+  private urlFenna: string = 'https://myths.cl/api/reset_password.php' //endpoint de la api del feña para notificar al usuario por correo el cambio de clave
+  private _http = inject(HttpClient)
+
 
   constructor(private client: HttpClient, private router: Router, private mensajeria: MensajeriaService) { }
 
@@ -41,53 +42,28 @@ export class AuthService {
 
   }
 
-  async registrar(data: any) {
-
-    try {
-
-      const response1: any = await lastValueFrom(this.client.post(`${this.baseUrlPrueba}personal/registro`, data))
-      console.log(response1)
-      this.mensajeria.presentarAlertaSucess(response1.message)
-      this.router.navigate(['login'])
-
-    } catch (error: any) {
-
-      this.mensajeria.presentarAlerta(error.error.message)
-      console.log(error)
-
-    }
-
+  registrar(data: any): Observable<any> {
+    return this._http.post(`${this.urlLocal}/personal/registro`, data)
   }
 
-  async login(data: any) {
+  traerCargos(): Observable<any> {
+    return this._http.get(`${this.urlLocal}/cargo/all_cargos`)
+  }
 
-    try {
+  login(data: any): Observable<any> {
+    return this.client.post(`${this.urlLocal}/personal/login`, data)
+  }
 
-      const response: any = await lastValueFrom(this.client.post(`${this.baseUrlPrueba}personal/login`, data))
-      localStorage.setItem('usuario', JSON.stringify(response.user))
-      localStorage.setItem('token', JSON.stringify(response.token))
+  traerPersonalByEmail(correo: string): Observable<any> {
+    return this._http.get(`${this.urlLocal}/personal/${correo}`)
+  }
 
-      switch (response.user.cargo) {
-        case 1:
-          this.router.navigate(['medico'])
-          break;
-        case 2:
-          this.router.navigate(['recepcion'])
-          break;
-        case 3:
-          this.router.navigate(['admin'])
-          break;
+  actualizarPassword(correo: string, data: any): Observable<any> {
+    return this._http.put(`${this.urlLocal}/personal/reset_password/${correo}`, data)
+  }
 
-        default:
-          break;
-      }
-
-    } catch (error: any) {
-
-      this.mensajeria.presentarAlerta(error.error.message)
-
-    }
-
+  notificarUsuario(data: any): Observable<any> {
+    return this._http.post(`${this.urlFenna}`, data)
   }
 
   verificarToken() {

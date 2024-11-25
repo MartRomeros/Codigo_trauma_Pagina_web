@@ -22,7 +22,7 @@
             <div class="mb-3">
                 <label for="email" class="form-label">Correo electronico <span class="asteristc"><i
                             class="bi bi-asterisk"></i></span></label>
-                <input type="email" class="form-control" id="email" formControlName="correo"
+                <input type="email" class="form-control" id="email" formControlName="email"
                     placeholder="Ingresa tu correo electronico">
                 <div class="text-danger">{{validarCampo('correo')}}</div>
             </div>
@@ -38,6 +38,7 @@
                 <label for="cargo" class="form-label">Cargo en el hospital <span class="asteristc"><i
                             class="bi bi-asterisk"></i></span></label>
                 <select class="form-select" id="cargo" formControlName="cargo">
+                    <option value="">Seleccione el cargo del hospital</option>
                     <ng-container *ngFor="let item of cargos">
                         <option [value]="item.id">{{item.descripcion}}</option>
                     </ng-container>

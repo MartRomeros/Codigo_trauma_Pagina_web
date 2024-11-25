@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MensajeriaService } from '../../../services/mensajeria/mensajeria.service';
 import { Router } from '@angular/router';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -13,15 +14,20 @@ import { Router } from '@angular/router';
 
 export class LoginComponent implements OnInit {
 
-  loginForm!: FormGroup
-  cargando?: boolean
-  tipoUsuario?: string
+  public loginForm!: FormGroup
+  public cargando?: boolean
+  public tipoUsuario?: string
+
+  private _auth = inject(AuthService)
+  private _fb = inject(FormBuilder)
+  private _mensajeria = inject(MensajeriaService)
+  private _router = inject(Router)
 
 
-  constructor(private _auth: AuthService, private fb: FormBuilder, private mensajeria: MensajeriaService, private router: Router) {
+  constructor() {
 
-    this.loginForm = fb.group({
-      correo: ['', [Validators.required, Validators.email]],
+    this.loginForm = this._fb.group({
+      email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
     })
 
@@ -29,28 +35,45 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     if (!localStorage.getItem('usuario')) {
-      this.router.navigate(['login'])
+      this._router.navigate(['login'])
     }
-
     if (!localStorage.getItem('token')) {
-      this.router.navigate(['login'])
+      this._router.navigate(['login'])
     }
-
-
-    this.cargando = false
-
   }
 
 
 
-  login() {
-    const data: any = {
-      email: this.loginForm.get('correo')?.value,
-      password: this.loginForm.get('password')?.value
+  async login() {
+    if (!this._auth.validarCampos(this.loginForm)) {
+      return
     }
-    this.cargando = true
-    this._auth.login(data)
-    this.cargando = false
+    try {
+      const data = this.loginForm.value
+      const response: any = await lastValueFrom(this._auth.login(data))
+
+      localStorage.setItem('token', JSON.stringify(response.token))
+      localStorage.setItem('usuario', JSON.stringify(response.user.email))
+
+      switch (response.user.cargo) {
+        case 1:
+          this._router.navigate(['recepcion'])
+          break;
+        case 2:
+          this._router.navigate(['admin'])
+          break;
+        case 3:
+          this._router.navigate(['medico'])
+          break;
+
+        default:
+          break;
+      }
+
+      console.log(response)
+    } catch (error: any) {
+      this._mensajeria.presentarAlerta(error.error.message)
+    }
   }
 
   validarCampo(nombre: string) {
