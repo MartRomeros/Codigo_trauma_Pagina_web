@@ -46,7 +46,9 @@ export class LoginComponent implements OnInit {
 
 
   async login() {
+    this.cargando = true
     if (!this._auth.validarCampos(this.loginForm)) {
+      this.cargando = false
       return
     }
     try {
@@ -55,7 +57,7 @@ export class LoginComponent implements OnInit {
 
       localStorage.setItem('token', JSON.stringify(response.token))
       localStorage.setItem('usuario', JSON.stringify(response.email))
-
+      this.cargando = false
       switch (response.cargo) {
         case 1:
           this._router.navigate(['recepcion'])
@@ -73,6 +75,7 @@ export class LoginComponent implements OnInit {
 
       console.log(response)
     } catch (error: any) {
+      this.cargando = false
       console.log(error)
     }
   }

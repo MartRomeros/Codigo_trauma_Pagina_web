@@ -1,52 +1,42 @@
-<div class="container">
-    <h1>Registro de Emergencias</h1>
-    <h3>Sección de recepción</h3>
+<main>
+    <mat-card appearance="outlined">
+        <mat-card-header>
+            <mat-card-title>Agregar una emergencia!</mat-card-title>
+            <mat-card-subtitle>Completa el formulario para agregar una emergencia</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <form [formGroup]="recepcionForm" (ngSubmit)="AgregarEmergencia()">
+                <mat-form-field>
+                    <textarea matInput placeholder="Ingresa la descripcion de la emergencia"
+                        formControlName="descripcion"></textarea>
+                </mat-form-field>
+                <mat-form-field>
+                    <input type="number" matInput placeholder="Ingresa la cantidad de victimas"
+                        formControlName="victimas">
+                </mat-form-field>
+                <button mat-button type="submit">Registrar Emergencia</button>
+            </form>
+        </mat-card-content>
+    </mat-card>
+    <mat-card appearance="outlined">
+        <table mat-table [dataSource]="emergencias" class="mat-elevation-z8">
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef>Id</th>
+                <td mat-cell *matCellDef="let item">{{item.id}}</td>
+            </ng-container>
 
-    <div class="card">
-        <h2>Nueva Emergencia</h2>
-        <form (ngSubmit)="AgregarEmergencia()" [formGroup]="recepcionForm">
-            <div class="form-group">
-                <textarea type="text" name="descripcion" placeholder="Descripción de la emergencia"
-                    formControlName="descripcion"></textarea>
-            </div>
-            <div class="form-group">
-                <input type="text" name="victimas" placeholder="Número de víctimas"
-                    formControlName="cantidadVictimas">
-            </div>
-            <button type="submit">Registrar Emergencia</button>
-        </form>
-    </div>
+            <ng-container matColumnDef="descripcion">
+                <th mat-header-cell *matHeaderCellDef>Descripción</th>
+                <td mat-cell *matCellDef="let item">{{item.descripcion}}</td>
+            </ng-container>
 
-    <!--
-    <div class="card">
-        <h2>Total de Víctimas</h2>
-        <p class="total-victimas">0</p>
-    </div>
-    -->
+            <ng-container matColumnDef="victimas">
+                <th mat-header-cell *matHeaderCellDef>Victimas</th>
+                <td mat-cell *matCellDef="let item">{{item.victimas}}</td>
+            </ng-container>
 
-    <div class="card">
-        <div class="card">
-            <h2>Historial de Emergencias</h2>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Fecha</th>
-                            <th>Descripción</th>
-                            <th>Víctimas</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let emergencia of emergencias">
-                            <td>{{ emergencia.id }}</td>
-                            <td>{{ emergencia.fecha }}</td>
-                            <td>{{ emergencia.descripcion }}</td>
-                            <td>{{ emergencia.victimas }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
+            <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+            <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+        </table>
+    </mat-card>
+</main>

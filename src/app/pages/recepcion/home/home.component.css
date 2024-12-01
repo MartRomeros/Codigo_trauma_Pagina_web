@@ -1,72 +1,18 @@
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-}
-
-.card {
-    background-color: #f0f0f0;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
-}
-
-h1,
-h2 {
-    color: #333;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-input,
-textarea {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-button {
-    background-color: darkcyan;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
+main{
+    padding: 2vh;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    gap: 4vh;
 }
 
-button:hover {
-    background-color: #01859c;
+form{
+    padding: 2vh;
+    display: flex;
+    flex-direction: column;
+
 }
 
-.total-victimas {
-    font-size: 24px;
-    font-weight: bold;
-    color: #007bff;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th,
-td {
-    text-align: left;
-    padding: 8px;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background-color: #f2f2f2;
-}
-
-.table-container {
-    max-height: 300px;
-    overflow-y: auto;
+mat-card{
+    max-height: 55vh;
+    overflow: auto;
 }
