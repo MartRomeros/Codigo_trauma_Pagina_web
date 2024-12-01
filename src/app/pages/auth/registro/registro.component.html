@@ -1,67 +1,62 @@
+@if(cargando){
+<mat-progress-bar mode="indeterminate"></mat-progress-bar>
+}
 <main class="container-fluid">
     <section class="row">
-        <form class="col-md-6" [formGroup]="formularioRegistro" (ngSubmit)="register()">
-            <fieldset>
-                <h5>Registro de usuario <i class="bi bi-person-fill-add"></i></h5>
-                <h6>Completa los campos para crear tu perfil de usuario</h6>
-            </fieldset>
-            <div class="mb-3">
-                <label for="name" class="form-label">Nombre <span class="asteristc"><i
-                            class="bi bi-asterisk"></i></span></label>
-                <input type="text" class="form-control" id="name" formControlName="nombre"
-                    placeholder="Ingresa tu nombre">
-                <div class="text-danger">{{validarCampo('nombre')}}</div>
-            </div>
-            <div class="mb-3">
-                <label for="last-name" class="form-label">Apellido <span class="asteristc"><i
-                            class="bi bi-asterisk"></i></span></label>
-                <input type="text" class="form-control" id="last-name" formControlName="apellido"
-                    placeholder="Ingresa tu apellido">
-                <div class="text-danger">{{validarCampo('apellido')}}</div>
-            </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">Correo electronico <span class="asteristc"><i
-                            class="bi bi-asterisk"></i></span></label>
-                <input type="email" class="form-control" id="email" formControlName="email"
-                    placeholder="Ingresa tu correo electronico">
-                <div class="text-danger">{{validarCampo('correo')}}</div>
-            </div>
+        <article class="col-md-6">
+            <h2>Registro de usuario</h2>
+            <h6>Completa el formulario para registrarte!</h6>
+            <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
 
-            <div class="mb-3">
-                <label for="fono" class="form-label">Numero Telefonico <span class="asteristc"><i
-                            class="bi bi-asterisk"></i></span></label>
-                <input type="number" class="form-control" id="fono" formControlName="fono"
-                    placeholder="Ingresa tu numero de telefono">
-                <div class="text-danger">{{validarCampo('fono')}}</div>
-            </div>
-            <div class="mb-3">
-                <label for="cargo" class="form-label">Cargo en el hospital <span class="asteristc"><i
-                            class="bi bi-asterisk"></i></span></label>
-                <select class="form-select" id="cargo" formControlName="cargo">
-                    <option value="">Seleccione el cargo del hospital</option>
-                    <ng-container *ngFor="let item of cargos">
-                        <option [value]="item.id">{{item.descripcion}}</option>
-                    </ng-container>
-                </select>
-                <div class="text-danger">{{validarCampo('cargo')}}</div>
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Contraseña <span class="asteristc"><i
-                            class="bi bi-asterisk"></i></span></label>
-                <input type="password" class="form-control" id="password" formControlName="password"
-                    placeholder="Ingresa tu contraseña">
-                <div class="text-danger">{{validarCampo('password')}}</div>
-            </div>
-            <fieldset class="login-options">
-                <a routerLink="/login">Ya tengo una cuenta</a>
-            </fieldset>
-            @if (cargando) {
-            <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
-            }@else {
-            <button type="submit" class="btn btn-info">Registrarme</button>
-            }
-        </form>
+                <mat-step [stepControl]="datosPersonalesForm">
+                    <form [formGroup]="datosPersonalesForm" (ngSubmit)="registrar()">
+                        <ng-template matStepLabel>Datos personales</ng-template>
+                        <mat-form-field>
+                            <mat-label>Nombre</mat-label>
+                            <input matInput placeholder="Ingresa tu primer nombre" formControlName="nombre">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Apellido</mat-label>
+                            <input matInput placeholder="Ingresa tu primer apellido" formControlName="apellido">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Numero Telefonico</mat-label>
+                            <input matInput type="number" placeholder="Ingresa tu numero de telefono"
+                                formControlName="fono">
+                        </mat-form-field>
+                        <div>
+                            <button mat-button matStepperNext type="button">Siguiente</button>
+                        </div>
+                    </form>
+                </mat-step>
+                <mat-step [stepControl]="registroForm">
+                    <form [formGroup]="registroForm" (ngSubmit)="registrar()">
+                        <ng-template matStepLabel>Datos del trabajo</ng-template>
+                        <mat-form-field>
+                            <mat-label>Correo Electronico</mat-label>
+                            <input matInput formControlName="email" placeholder="usuario@gmail.com">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Contraseña</mat-label>
+                            <input matInput formControlName="password" placeholder="Ingresa tu contraseña"
+                                [type]="visible ? 'text' : 'password'">
+                            <button mat-icon-button matSuffix type="button" (click)="verPasword()">
+                                <mat-icon>{{visible ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </button>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-select formControlName="cargo">
+                                <mat-option value="">cargo</mat-option>
+                                <ng-container *ngFor="let item of cargos">
+                                    <mat-option value="{{item.id}}">{{item.descripcion}}</mat-option>
+                                </ng-container>
+                            </mat-select>
+                        </mat-form-field>
+                        <button mat-button type="submit">Registrarme</button>
+                    </form>
+                </mat-step>
+
+            </mat-stepper>
+        </article>
     </section>
 </main>

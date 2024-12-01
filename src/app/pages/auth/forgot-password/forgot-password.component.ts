@@ -46,10 +46,6 @@ export class ForgotPasswordComponent {
       await lastValueFrom(this._auth.notificarUsuario(dataToNotificar))
       this._router.navigate(['login'])
 
-
-      //await lastValueFrom(this._auth.notificarUsuario(correo))
-
-
     } catch (error: any) {
       console.log(error)
     }

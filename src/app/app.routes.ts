@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/auth/login/login.component';
-import { RegistroComponent } from './pages/auth/registro/registro.component';
 import { ForgotPasswordComponent } from './pages/auth/forgot-password/forgot-password.component';
 import { HomeComponent } from './pages/recepcion/home/home.component';
 import { HomeMedicComponent } from './pages/medico/home/home.component';
 import { AdminComponent } from './pages/admin/admin/admin.component';
+import { RegistroComponent } from './pages/auth/registro/registro.component';
 
 export const routes: Routes = [
     {

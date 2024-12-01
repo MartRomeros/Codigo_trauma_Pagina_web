@@ -5,30 +5,26 @@
 <main class="container-fluid">
     <section class="row">
         <form class="col-md-6" [formGroup]="loginForm" (ngSubmit)="login()">
-            <fieldset>
-                <h5>Inicio de Sesión <i class="bi bi-door-closed-fill"></i></h5>
-                <h6>Completa los campos para ingresar con tu perfil</h6>
-            </fieldset>
-            <div class="mb-3">
-                <label for="email" class="form-label">Correo electronico</label>
-                <input type="email" class="form-control" id="email" formControlName="email"
-                    placeholder="ingresa tu correo electronico">
-                @if (validarCampo('email')) {<div id="emailHelp" class="text-danger">Email requerido</div>}
+            <div>
+                <h2>Inicio de sesión</h2>
+                <h6>Completa todos los campos para ingresar con tu perfil</h6>
             </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="password" formControlName="password" placeholder="ingresa tu contraseña">
-                @if (validarCampo('password')) {<div id="emailHelp" class="text-danger">Contraseña requerida</div>}
+            <mat-form-field>
+                <mat-label>Correo Electronico</mat-label>
+                <input matInput placeholder="usuario@gmail.com" formControlName="email" type="email">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Contraseña</mat-label>
+                <input matInput [type]="visible ? 'text' : 'password'" formControlName="password">
+                <button mat-icon-button matSuffix type="button" (click)="verPasword()">
+                    <mat-icon>{{visible ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+            <div class="login-options">
+                <a routerLink="/registro">Registrarme</a>
+                <a routerLink="/forgot-password">Olvidaste tu contraseña?</a>
             </div>
-            <fieldset class="login-options">
-
-                <a routerLink="/forgot-password">¿Olvidaste tu contraseña?</a>
-
-                <a routerLink="/registro">Registrarme <i class="bi bi-person-fill-add"></i></a>
-
-            </fieldset>
-
-            <button type="submit" class="btn btn-info">Ingresar</button>
+            <button mat-button type="submit">Iniciar Sesión</button>
         </form>
     </section>
 </main>

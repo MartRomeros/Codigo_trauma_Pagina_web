@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { AuthService } from '../../../services/auth/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MensajeriaService } from '../../../services/mensajeria/mensajeria.service';
@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
   public loginForm!: FormGroup
   public cargando?: boolean
   public tipoUsuario?: string
+  public visible: boolean = false //variable para ver la contraseña
 
   private _auth = inject(AuthService)
   private _fb = inject(FormBuilder)
@@ -53,9 +54,9 @@ export class LoginComponent implements OnInit {
       const response: any = await lastValueFrom(this._auth.login(data))
 
       localStorage.setItem('token', JSON.stringify(response.token))
-      localStorage.setItem('usuario', JSON.stringify(response.user.email))
+      localStorage.setItem('usuario', JSON.stringify(response.email))
 
-      switch (response.user.cargo) {
+      switch (response.cargo) {
         case 1:
           this._router.navigate(['recepcion'])
           break;
@@ -72,12 +73,20 @@ export class LoginComponent implements OnInit {
 
       console.log(response)
     } catch (error: any) {
-      this._mensajeria.presentarAlerta(error.error.message)
+      console.log(error)
     }
   }
 
   validarCampo(nombre: string) {
     return this._auth.validarCampo(this.loginForm, nombre)
+  }
+
+  verPasword() {
+    if (!this.visible) {
+      this.visible = true
+    } else {
+      this.visible = false
+    }
   }
 
 

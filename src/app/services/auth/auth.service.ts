@@ -13,17 +13,26 @@ export class AuthService {
   private urlLocal: string = 'http://localhost:3000'
   private urlFenna: string = 'https://myths.cl/api/reset_password.php' //endpoint de la api del feña para notificar al usuario por correo el cambio de clave
   private _http = inject(HttpClient)
+  private _mensajeria = inject(MensajeriaService)
 
 
-  constructor(private client: HttpClient, private router: Router, private mensajeria: MensajeriaService) { }
+  constructor(private client: HttpClient, private router: Router) { }
 
   validarCampos(formulario: FormGroup): boolean {
     const campos = Object.keys(formulario.controls)
     for (let i = 0; i < campos.length; i++) {
       const campo = formulario.get(campos[i])
       if (campo?.errors) {
-        this.mensajeria.presentarAlerta(`el campo ${campos[i]} presenta un error`)
-        return false
+        switch (campos[i]) {
+          case 'email':
+            this._mensajeria.presentarAlerta(`el campo c presenta un error`)
+            break;
+
+          default:
+            this._mensajeria.presentarAlerta(`el campo ${campos[i].toLocaleUpperCase()} presenta un error`)
+            return false
+            break;
+        }
       }
     }
     return true;
@@ -31,7 +40,7 @@ export class AuthService {
 
   validarCampo(formulario: FormGroup, nombre: string): string {
     if (formulario.get(nombre)?.hasError('required') && formulario.get(nombre)?.touched) {
-      return 'Campo requerido!'
+      return `${nombre.toLocaleUpperCase} es requerido!`
 
     } else if (formulario.get(nombre)?.hasError('email') && formulario.get(nombre)?.touched) {
       return 'Formato invalido!'
@@ -68,7 +77,7 @@ export class AuthService {
 
   verificarToken() {
     if (!localStorage.getItem('token')) {
-      this.mensajeria.presentarAlerta('Ha ocurrido un problema!, volveras al inicio de sesión')
+      this._mensajeria.presentarAlerta('Ha ocurrido un problema!, volveras al inicio de sesión')
       this.logout()
       this.router.navigate(['login'])
     }

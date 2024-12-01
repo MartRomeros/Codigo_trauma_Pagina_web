@@ -7,8 +7,14 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-import { RegistroComponent } from './registro/registro.component';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2'
+import { RegistroComponent } from './registro/registro.component';
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatInputModule } from '@angular/material/input'
+import { MatButtonModule } from '@angular/material/button'
+import { MatIconModule } from '@angular/material/icon'
+import { MatStepperModule } from '@angular/material/stepper'
+import { MatSelectModule } from '@angular/material/select'
 
 
 
@@ -20,7 +26,14 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2'
     ReactiveFormsModule,
     RouterLink,
     HttpClientModule,
-    SweetAlert2Module
+    SweetAlert2Module,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    RouterLink,
+    MatIconModule,
+    MatStepperModule,
+    MatSelectModule
   ],
   exports: [LoginComponent, ForgotPasswordComponent, RegistroComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

@@ -1,23 +1,46 @@
-<nav class="navbar navbar-expand-lg">
-    <div class="container-fluid">
-        <h5 class="navbar-brand" href="#">CODIGO TRAUMA <i class="bi bi-hospital"></i></h5>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+<mat-toolbar>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+        @if (verificarToken()) {
+            <button mat-button (click)="logout()">
+                Cerrar Sesión
+                <mat-icon>
+                    <span class="material-symbols-outlined">logout </span>
+                </mat-icon>
+            </button>
+        }@else {
+            <button mat-button (click)="navegar('registro')">
+                Registrarme
+                <mat-icon>
+                    <span class="material-symbols-outlined">person_add</span>
+                </mat-icon>
+            </button>
+            <button mat-button (click)="navegar('login')">
+                Inicio de Sesión
+                <mat-icon>
+                    <span class="material-symbols-outlined">login</span>
+                </mat-icon>
+            </button>
+        }
+    </mat-menu>
+    <span>Codigo Trauma <mat-icon><span class="material-symbols-outlined">emergency</span></mat-icon> </span>
+    @if (!verificarToken()) {
+        <button mat-button (click)="navegar('login')">
+            Inicio de Sesión
+            <mat-icon (click)="navegar('login')">
+                <span class="material-symbols-outlined">login</span>
+            </mat-icon>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                @if(verificarToken()){
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/login" (click)="logout()">Cerrar Sesión</a>
-                </li>
-                }@else {
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/login">Iniciar Sesión</a>
-                </li>
-                }
-            </ul>
-        </div>
-    </div>
-</nav>
+    }@else {
+        <button mat-button (click)="logout()">
+            Cerrar Sesión
+            <mat-icon (click)="logout()">
+                <span class="material-symbols-outlined">logout </span>
+            </mat-icon>
+        </button>
+    }
+</mat-toolbar>
+
 <router-outlet />
