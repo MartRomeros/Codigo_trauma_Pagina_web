@@ -26,21 +26,6 @@
         }
     </mat-menu>
     <span>Codigo Trauma <mat-icon><span class="material-symbols-outlined">emergency</span></mat-icon> </span>
-    @if (!verificarToken()) {
-        <button mat-button (click)="navegar('login')">
-            Inicio de Sesión
-            <mat-icon (click)="navegar('login')">
-                <span class="material-symbols-outlined">login</span>
-            </mat-icon>
-        </button>
-    }@else {
-        <button mat-button (click)="logout()">
-            Cerrar Sesión
-            <mat-icon (click)="logout()">
-                <span class="material-symbols-outlined">logout </span>
-            </mat-icon>
-        </button>
-    }
 </mat-toolbar>
 
 <router-outlet />

@@ -72,11 +72,10 @@ export class LoginComponent implements OnInit {
         default:
           break;
       }
-
-      console.log(response)
     } catch (error: any) {
       this.cargando = false
       console.log(error)
+      this._mensajeria.presentarAlerta(error.error.message)
     }
   }
 

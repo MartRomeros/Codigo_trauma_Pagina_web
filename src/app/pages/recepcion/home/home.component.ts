@@ -5,7 +5,7 @@ import { MensajeriaService } from '../../../services/mensajeria/mensajeria.servi
 import { AuthService } from '../../../services/auth/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
-import { emergencia } from '../../../models/emergencias';
+import { emergencia } from '../../../models/modelos';
 
 @Component({
   selector: 'app-recepcion-home',
@@ -17,8 +17,6 @@ export class HomeComponent implements OnInit {
   public emergencias!: emergencia[]
   public columnas: string[] = ['id', 'descripcion', 'victimas']
 
-  private fechaActual: Date = new Date()
-  private fecha: string = this.fechaActual.getDate() + '/' + (this.fechaActual.getMonth() + 1) + '/' + this.fechaActual.getFullYear()
   private _fb = inject(FormBuilder)
   private _auth = inject(AuthService)
   private _emergencia = inject(EmergenciasService)
@@ -40,14 +38,19 @@ export class HomeComponent implements OnInit {
       return
     }
 
+    const fechaActual = new Date();
+    const anio = fechaActual.getFullYear();
+    const mes = String(fechaActual.getMonth() + 1).padStart(2, '0')
+    const dia = String(fechaActual.getDate()).padStart(2, '0')
+
     try {
       const data = {
         descripcion: this.recepcionForm.get('descripcion')?.value,
         victimas: this.recepcionForm.get('victimas')?.value.toString(),
-        fecha: this.fechaActual
+        fecha: `${dia}/${mes}/${anio}`
       }
       const response: any = await lastValueFrom(this._emergencia.crearEmergencia(data))
-      const response2:any = await lastValueFrom(this._emergencia.traerEmergencias())
+      const response2: any = await lastValueFrom(this._emergencia.traerEmergencias())
       this.emergencias = response2.emergencias
       this._mensajeria.presentarAlertaSucess(response.message)
 

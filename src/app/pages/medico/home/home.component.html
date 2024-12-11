@@ -1,32 +1,34 @@
-<div class="form-container">
-
-
-    @if (emergencia.length !== 0) {
-    <h2>Actualizar Estado de Emergencia</h2>
-    <p>Ingrese los detalles para actualizar el estado de la Emergencia</p>
-    <form>
-        <div class="form-group">
-            <label for="idEmergencia">ID de Emergencia</label>
-            <input type="text" id="idEmergencia" placeholder="Ingrese el id de la emergencia">
-        </div>
-
-        <div class="form-grup">
-            <label for="nuevoEstado">Nuevo Estado</label>
-            <select id="cosito">
-                <option value="" disabled selected>Seleccione el nuevo estado</option>
-                <option value="en-preoceso">En proceso</option>
-                <option value="finalizado">Finalizado</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="descripcion">Descripción de la emergencia</label>
-            <textarea id="descripcion" placeholder="Proporcione detalles de la emergencia"></textarea>
-        </div>
-
-        <button type="submit" class="btn-actualizar">Actualizar Estado</button>
-    </form>
+<main>
+    @if (!atencion) {
+    <h1>No presentas atenciones para atender!</h1>
     }@else {
-        <H1>No presentas emergencias para abordar!</H1>
+    <mat-card appearance="outlined">
+        <mat-card-header>
+            <mat-card-title>Actualizacion de la atencion</mat-card-title>
+            <mat-card-subtitle>Aca podras actualizar el estado de la atencion</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-list role="list">
+                <mat-list-item role="listitem">ID: {{atencion.id}}</mat-list-item>
+                <mat-list-item role="listitem">Descripcion: {{atencion.descripcion}}</mat-list-item>
+                <mat-list-item role="listitem">N° de victimas: {{atencion.victimas}}</mat-list-item>
+                <mat-list-item role="listitem">fecha: {{atencion.fecha}}</mat-list-item>
+                <mat-list-item role="listitem">estado: {{atencion.estado}}</mat-list-item>
+                <mat-list-item role="listitem">Medico a cargo: {{medico?.nombre}} {{medico?.apellido}}</mat-list-item>
+            </mat-list>
+        </mat-card-content>
+        <mat-card-footer>
+            <form [formGroup]="medicoForm">
+                <mat-form-field>
+                    <mat-label>Indica el estado de la emergencia</mat-label>
+                    <mat-select formControlName="estado">
+                        <mat-option value="{{atencion.estado}}">{{atencion.estado}}</mat-option>
+                        <mat-option value="Resuelta">Resuelta</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </form>
+            <button mat-button (click)="resolverAtencion()">Confirmar</button>
+        </mat-card-footer>
+    </mat-card>
     }
-</div>
+</main>

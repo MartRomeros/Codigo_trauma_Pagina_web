@@ -10,6 +10,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu'
+import { MedicoModule } from './pages/medico/medico.module';
 
 
 @Component({
@@ -21,6 +22,7 @@ import { MatMenuModule } from '@angular/material/menu'
     HttpClientModule,
     RecepcionModule,
     AdminModule,
+    MedicoModule,
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,

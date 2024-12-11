@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { AtencionService } from '../../../services/atencion/atencion.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MensajeriaService } from '../../../services/mensajeria/mensajeria.service';
 import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { AuthService } from '../../../services/auth/auth.service';
+import { atencion, personal } from '../../../models/modelos';
+import Swal from 'sweetalert2';
+import { MensajeriaService } from '../../../services/mensajeria/mensajeria.service';
 
 @Component({
   selector: 'app-admin',
@@ -13,106 +14,111 @@ import { AuthService } from '../../../services/auth/auth.service';
 })
 export class AdminComponent implements OnInit {
 
-  atencionForm!: FormGroup
-  atenciones: any = []
-  medicos: any = []
+  public atenciones: atencion[] = []
+  public columnas: string[] = ['id', 'estado', 'opciones']
+  public medicos: any = []
 
-  constructor(private _atencion: AtencionService, private fb: FormBuilder, private _mensajeria: MensajeriaService, private _router: Router, private _auth: AuthService) {
-    this.atencionForm = fb.group({
-      email: ['', [Validators.required, Validators.email]],
-    })
-  }
+
+  private idMedico?: string
+  private idAtencion?: number
+  private atencion?: atencion
+  private medico?: personal
+  private _atencion = inject(AtencionService)
+  private _auth = inject(AuthService)
+  private _router = inject(Router)
+  private _mensajeria = inject(MensajeriaService)
+
 
   ngOnInit(): void {
-    this.traerAtenciones()
-    this.traerMedicos()
+    this.traerAtencionesVigentes()
+    this.traerMedicosVigentes()
   }
 
-  async traerAtenciones() {
-
+  async mostrarDetalles(id: number) {
     try {
-
-      const response: any = await lastValueFrom(this._atencion.traerAtenciones())
-      console.log(response.atenciones)
-      this.atenciones = response.atenciones
-
-    } catch (error: any) {
-      console.log(error)
-    }
-
-  }
-
-  async traerAtencion(id: number) {
-
-    try {
-
       const response: any = await lastValueFrom(this._atencion.traerAtencion(id))
-      console.log(response)
-      document.querySelector("#id-form-atencion")!.textContent = response.resAtencion.id
-      document.querySelector("#descripcion-form-atencion")!.textContent = response.resAtencion.descripcion
-      document.querySelector("#victimas-form-atencion")!.textContent = response.resAtencion.victimas
-      document.querySelector("#fecha-form-atencion")!.textContent = response.resAtencion.fecha
-      document.querySelector("#medico-form-atencion")!.textContent = response.resAtencion.medico
-
-
-
-    } catch (error) {
-
+      Swal.fire({
+        title: "Informacion sobre la emergencia",
+        icon: "info",
+        html: `
+        <ul>
+          <li>Id: ${response.resAtencion.id}</li>
+          <li>Descripcion: ${response.resAtencion.descripcion}</li>
+          <li>Estado: ${response.resAtencion.estado}</li>
+          <li>Fecha: ${response.resAtencion.fecha}</li>
+          <li>Medico: ${response.resAtencion.medico}</li>
+          <li>Victimas involucradas: ${response.resAtencion.victimas}</li>
+        </ul>
+        `,
+        showCloseButton: true,
+        showCancelButton: false,
+        focusConfirm: false,
+        confirmButtonText: `Aceptar`,
+        confirmButtonAriaLabel: "Thumbs up, great!"
+      })
+    } catch (error: any) {
     }
-
   }
 
-  async traerMedicos() {
-
+  async traerAtencionesVigentes() {
     try {
-      const response: any = await lastValueFrom(this._atencion.traerMedicos())
+      const response: any = await lastValueFrom(this._atencion.traerAtencionesVigentes())
+      this.atenciones = response
+    } catch (error: any) {
+      this._mensajeria.presentarAlerta('Ha ocurrido un error')
+    }
+  }
 
-      console.log(response.medicos)
-
-
+  async traerMedicosVigentes() {
+    try {
+      const response: any = await lastValueFrom(this._atencion.traerMedicosVigentes())
       this.medicos = response.medicos
     } catch (error: any) {
-
-      console.log(error)
-
-    }
-
-  }
-
-  asignarMedico() {
-
-    if (!this._auth.validarCampos(this.atencionForm)) {
-      return
     }
   }
 
+  async solicitarAtencion() {
+    try {
+      //traemos la atencion a actualizar!
+      this.atencion = await lastValueFrom(this._atencion.traerAtencion(this.idAtencion!))
+      //traemos el medico que se encargara de la atencion
+      this.medico = await lastValueFrom(this._auth.traerPersonalByEmail(this.idMedico!))
+      if(this.medico?.disponibilidad != 'Disponible'){
+        this._mensajeria.presentarAlerta('Medico no disponible!')
+        return
+      }
+      console.log(this.medico)
+      //actualizar estado de la atencion!
+      const response: any = await lastValueFrom(this._atencion.actualizarEstado(this.idAtencion!, 'En progreso'))
+      //asignarMedico
+      const response1: any = await lastValueFrom(this._atencion.asignarMedico(this.idAtencion!, this.medico!.email))
+      //cambiar estado del medico
+      const response2: any = await lastValueFrom(this._atencion.cambiarDisponibilidad(this.medico!.id, 'Ocupado'))
+      //cambiar la lista de medicos
+      await lastValueFrom(this._atencion.traerMedicosVigentes())
+      //notificar
+      const response3: any = await lastValueFrom(this._atencion.notificarPorCorreo(this.idAtencion!, this.idMedico!,this.medico!.fono.toString()))
+      //mostrarAlerta
+      this._mensajeria.presentarAlertaSucess('Emergencia abordada!')
+      this.refrescarPage()
+
+    } catch (error: any) {
+    }
+  }
+
+  //con las dos variables auxliliares debemos asignarle estos valores de las funciones
+  traerMedico(email: string) {
+    this.idMedico = email
+  }
+
+  traerAtencion(id: number) {
+    this.idAtencion = id
+  }
 
   refrescarPage() {
     this._router.navigateByUrl('/admin', { skipLocationChange: true }).then(() => {
       this._router.navigate(['/admin'])
     })
-  }
-
-
-
-  async mostrarDetallesAtencion(id: number) {
-
-    try {
-
-      const response: any = await lastValueFrom(this._atencion.traerAtencion(id))
-      console.log(response.resAtencion)
-      document.querySelector("#id-atencion")!.textContent = response.resAtencion.id
-      document.querySelector("#descripcion-atencion")!.textContent = response.resAtencion.descripcion
-      document.querySelector("#victimas-atencion")!.textContent = response.resAtencion.victimas
-      document.querySelector("#fecha-atencion")!.textContent = response.resAtencion.fecha
-      document.querySelector("#medico-atencion")!.textContent = response.resAtencion.medico
-
-    } catch (error) {
-
-      console.log(error)
-
-    }
-
   }
 
 

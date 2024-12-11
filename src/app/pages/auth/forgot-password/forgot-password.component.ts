@@ -29,7 +29,6 @@ export class ForgotPasswordComponent {
       const correo = this.forgotForm.get('email')?.value
 
       const user: any = await lastValueFrom(this._auth.traerPersonalByEmail(correo))
-      console.log(user)
 
       const password = this._auth.generarContrasenaUnica()
       const data = { password: password }
@@ -47,7 +46,6 @@ export class ForgotPasswordComponent {
       this._router.navigate(['login'])
 
     } catch (error: any) {
-      console.log(error)
     }
   }
 
