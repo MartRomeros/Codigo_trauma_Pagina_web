@@ -20,7 +20,7 @@ export class EmergenciasService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     })
-    return this.http.post(this.baseUrlPruebas + '/generar_emergencia', data, { headers })
+    return this.http.post(this.baseUrlProduccion + '/generar_emergencia', data, { headers })
 
 
   }
@@ -32,7 +32,7 @@ export class EmergenciasService {
       'Authorization': `Bearer ${token}`
     })
 
-    return this.http.get(`${this.baseUrlPruebas}/traer_emergencias`, { headers })
+    return this.http.get(`${this.baseUrlProduccion}/traer_emergencias`, { headers })
 
   }
 

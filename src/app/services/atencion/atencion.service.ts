@@ -21,7 +21,7 @@ export class AtencionService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     })
-    return this._http.get(this.baseUrlPrueba + 'atencion/atenciones', { headers })
+    return this._http.get(this.baseUrlProduccion + 'atencion/atenciones', { headers })
   }
 
   traerAtencion(id: number): Observable<any> {
@@ -30,7 +30,7 @@ export class AtencionService {
       'Authorization': `Bearer ${token}`
     })
     const params = new HttpParams().set('number', id.toString())
-    return this._http.get(this.baseUrlPrueba + `atencion/atenciones/${id}`, { headers, params })
+    return this._http.get(this.baseUrlProduccion + `atencion/atenciones/${id}`, { headers, params })
   }
 
   traerMedicosVigentes(): Observable<any> {
@@ -38,7 +38,7 @@ export class AtencionService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     })
-    return this._http.get(`${this.baseUrlPrueba}personal/medicos_vigentes`, { headers })
+    return this._http.get(`${this.baseUrlProduccion}personal/medicos_vigentes`, { headers })
   }
 
   traerAtencionesVigentes(): Observable<any> {
@@ -46,7 +46,7 @@ export class AtencionService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     })
-    return this._http.get(`${this.baseUrlPrueba}atencion/atenciones_vigentes`, { headers })
+    return this._http.get(`${this.baseUrlProduccion}atencion/atenciones_vigentes`, { headers })
   }
 
   actualizarEstado(id: number, estado: string): Observable<any> {
@@ -55,7 +55,7 @@ export class AtencionService {
       'Authorization': `Bearer ${token}`
     })
     const data = { estado: estado }
-    return this._http.put(`${this.baseUrlPrueba}atencion/actualizar_estado/${id}`, data, { headers })
+    return this._http.put(`${this.baseUrlProduccion}atencion/actualizar_estado/${id}`, data, { headers })
   }
 
   asignarMedico(id: number, email: string): Observable<any> {
@@ -64,7 +64,7 @@ export class AtencionService {
       'Authorization': `Bearer ${token}`
     })
     const data = { medico: email }
-    return this._http.put(`${this.baseUrlPrueba}atencion/asignar_medico/${id}`, data, { headers })
+    return this._http.put(`${this.baseUrlProduccion}atencion/asignar_medico/${id}`, data, { headers })
   }
 
   cambiarDisponibilidad(id: number, disponibilidad: string): Observable<any> {
@@ -73,7 +73,7 @@ export class AtencionService {
       'Authorization': `Bearer ${token}`
     })
     const data = { disponibilidad: disponibilidad }
-    return this._http.put(`${this.baseUrlPrueba}personal/cambiar_disponibilidad/${id}`, data, { headers })
+    return this._http.put(`${this.baseUrlProduccion}personal/cambiar_disponibilidad/${id}`, data, { headers })
   }
 
   notificarPorCorreo(id: number, email: string, fono: string): Observable<any> {
@@ -82,7 +82,7 @@ export class AtencionService {
       'Authorization': `Bearer ${token}`
     })
     const data = { email: email, atencionId: id, fono: fono }
-    return this._http.post(`${this.baseUrlPrueba}personal/notificar_por_correo`, data, { headers })
+    return this._http.post(`${this.baseUrlProduccion}personal/notificar_por_correo`, data, { headers })
   }
 
   traerAtencionByMedico(email: string): Observable<any> {
@@ -90,7 +90,7 @@ export class AtencionService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     })
-    return this._http.get(`${this.baseUrlPrueba}atencion/atenciones/medico/${email}`,{ headers })
+    return this._http.get(`${this.baseUrlProduccion}atencion/atenciones/medico/${email}`,{ headers })
   }
 
 }

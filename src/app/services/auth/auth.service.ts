@@ -12,6 +12,7 @@ export class AuthService {
 
   private urlLocal: string = 'http://localhost:3000'
   private urlFenna: string = 'https://myths.cl/api/reset_password.php' //endpoint de la api del feña para notificar al usuario por correo el cambio de clave
+  private urlProduccion:string = 'https://codigotraumabackend-production.up.railway.app'
   private _http = inject(HttpClient)
   private _mensajeria = inject(MensajeriaService)
 
@@ -52,23 +53,23 @@ export class AuthService {
   }
 
   registrar(data: any): Observable<any> {
-    return this._http.post(`${this.urlLocal}/personal/registro`, data)
+    return this._http.post(`${this.urlProduccion}/personal/registro`, data)
   }
 
   traerCargos(): Observable<any> {
-    return this._http.get(`${this.urlLocal}/cargo/all_cargos`)
+    return this._http.get(`${this.urlProduccion}/cargo/all_cargos`)
   }
 
   login(data: any): Observable<any> {
-    return this.client.post(`${this.urlLocal}/personal/login`, data)
+    return this.client.post(`${this.urlProduccion}/personal/login`, data)
   }
 
   traerPersonalByEmail(correo: string): Observable<any> {
-    return this._http.get(`${this.urlLocal}/personal/${correo}`)
+    return this._http.get(`${this.urlProduccion}/personal/${correo}`)
   }
 
   actualizarPassword(correo: string, data: any): Observable<any> {
-    return this._http.put(`${this.urlLocal}/personal/reset_password/${correo}`, data)
+    return this._http.put(`${this.urlProduccion}/personal/reset_password/${correo}`, data)
   }
 
   notificarUsuario(data: any): Observable<any> {
