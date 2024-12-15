@@ -46,35 +46,32 @@ export class LoginComponent implements OnInit {
 
 
   async login() {
+
     this.cargando = true
+
     if (!this._auth.validarCampos(this.loginForm)) {
       this.cargando = false
       return
     }
+    
     try {
+
       const data = this.loginForm.value
       const response: any = await lastValueFrom(this._auth.login(data))
 
       localStorage.setItem('token', JSON.stringify(response.token))
       localStorage.setItem('usuario', JSON.stringify(response.email))
       this.cargando = false
-      switch (response.cargo) {
-        case 1:
-          this._router.navigate(['recepcion'])
-          break;
-        case 2:
-          this._router.navigate(['admin'])
-          break;
-        case 3:
-          this._router.navigate(['medico'])
-          break;
+      this._router.navigate(response.cargo)
 
-        default:
-          break;
-      }
     } catch (error: any) {
       this.cargando = false
-      console.log(error)
+
+      if (error.status == 0) {
+        this._mensajeria.presentarAlerta('Ha ocurrido un error, intente mas tarde!')
+        return
+      }
+
       this._mensajeria.presentarAlerta(error.error.message)
     }
   }
