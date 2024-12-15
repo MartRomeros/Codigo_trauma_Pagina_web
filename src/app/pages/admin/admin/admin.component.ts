@@ -83,7 +83,7 @@ export class AdminComponent implements OnInit {
       this.atencion = await lastValueFrom(this._atencion.traerAtencion(this.idAtencion!))
       //traemos el medico que se encargara de la atencion
       this.medico = await lastValueFrom(this._auth.traerPersonalByEmail(this.idMedico!))
-      if(this.medico?.disponibilidad != 'Disponible'){
+      if (this.medico?.disponibilidad != 'Disponible') {
         this._mensajeria.presentarAlerta('Medico no disponible!')
         return
       }
@@ -97,7 +97,7 @@ export class AdminComponent implements OnInit {
       //cambiar la lista de medicos
       await lastValueFrom(this._atencion.traerMedicosVigentes())
       //notificar
-      const response3: any = await lastValueFrom(this._atencion.notificarPorCorreo(this.idAtencion!, this.idMedico!,this.medico!.fono.toString()))
+      const response3: any = await lastValueFrom(this._atencion.notificarPorCorreo(this.idAtencion!, this.idMedico!, this.medico!.fono.toString()))
       //mostrarAlerta
       this._mensajeria.presentarAlertaSucess('Emergencia abordada!')
       this.refrescarPage()
@@ -119,6 +119,20 @@ export class AdminComponent implements OnInit {
     this._router.navigateByUrl('/admin', { skipLocationChange: true }).then(() => {
       this._router.navigate(['/admin'])
     })
+  }
+
+  async refrescar() {
+    try {
+      const response: any = await lastValueFrom(this._atencion.traerAtencionesVigentes())
+      this.atenciones = response
+    } catch (error: any) {
+      this._mensajeria.presentarAlerta('Ha ocurrido un error')
+    }
+    try {
+      const response: any = await lastValueFrom(this._atencion.traerMedicosVigentes())
+      this.medicos = response.medicos
+    } catch (error: any) {
+    }
   }
 
 

@@ -1,0 +1,23 @@
+[
+    {
+        "nombre": "Martin",
+        "apellido": "Romero",
+        "fono": 964041720,
+        "email": "martinsantiago.se@gmail.com",
+        "password": "123"
+    },
+    {
+        "nombre": "Martin",
+        "apellido": "Romero",
+        "fono": 999999999,
+        "email": "mart.romeros@duocuc.cl",
+        "password": "123"
+    },
+    {
+        "nombre": "Martin",
+        "apellido": "Romero",
+        "fono": 999999999,
+        "email": "martin@gmail.com",
+        "password": "123"
+    }
+]

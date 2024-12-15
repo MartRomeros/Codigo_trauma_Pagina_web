@@ -1,6 +1,7 @@
 <main>
     @if (!atencion) {
     <h1>No presentas atenciones para atender!</h1>
+    <button mat-button (click)="refrescar()">Refrescar</button>
     }@else {
     <mat-card appearance="outlined">
         <mat-card-header>
